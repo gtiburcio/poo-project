@@ -1,5 +1,6 @@
 package application;
 
+import application.views.medico.NovoMedico;
 import application.views.paciente.NovoPaciente;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene novoPacienteScene = new NovoPaciente().mountScene(stage);
+        Scene novoPacienteScene = new NovoMedico().mountScene(stage);
         stage.setScene(novoPacienteScene);
         stage.setResizable(false);
         stage.show();

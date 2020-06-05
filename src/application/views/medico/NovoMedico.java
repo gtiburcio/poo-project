@@ -1,5 +1,6 @@
 package application.views.medico;
 
+import application.views.Tela;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,18 +12,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class NovoMedico{
-	
-	private Scene scene;
+public class NovoMedico implements Tela {
 
-    private Pane pane;
+    private final Scene scene;
+
+    private final Pane pane;
 
     public NovoMedico() {
         this.pane = new Pane();
         this.scene = new Scene(pane, 900, 600);
     }
-    
-    public Scene mountScene(Stage stage) {
+
+    public void mountScene(Stage stage) {
         Label lblNome = new Label("Nome");
         TextField tfNome = new TextField();
 
@@ -40,8 +41,8 @@ public class NovoMedico{
         Label lblDataNasc = new Label("Data Nascimento");
         DatePicker dpDataNasc = new DatePicker();
 
-        Label lblNCons = new Label("Nº do conselho");
-        TextField tfNCons= new TextField();
+        Label lblNCons = new Label("NÂº do conselho");
+        TextField tfNCons = new TextField();
 
         Label lblSiglaCon = new Label("Sigla do conselho");
         ComboBox<Object> cbSiglaCons = new ComboBox<>();
@@ -49,10 +50,10 @@ public class NovoMedico{
         Label lblUFCons = new Label("UF do conselho");
         ComboBox<Object> cbUFCons = new ComboBox<>();
 
-        Label lblGenero = new Label("Gênero");
+        Label lblGenero = new Label("GÃªnero");
         ComboBox<Object> cbGenero = new ComboBox<>();
 
-        Label lblEndereco = new Label("Endereço");
+        Label lblEndereco = new Label("EndereÃ§o");
 
         Label lblLogradouro = new Label("Logradouro");
         TextField tfLogradouro = new TextField();
@@ -63,7 +64,7 @@ public class NovoMedico{
         Label lblComplemento = new Label("Complemento");
         TextField tfComplemento = new TextField();
 
-        Label lblNumero = new Label("Número");
+        Label lblNumero = new Label("NÃºmero");
         TextField tfNumero = new TextField();
 
         Label lblBairro = new Label("Bairro");
@@ -132,10 +133,10 @@ public class NovoMedico{
         lblEspecial.relocate(550, 90);
         cbEspecial.relocate(650, 90);
         cbEspecial.setMinWidth(200);
-        
+
         lblDadosPrincipais.relocate(30, 190);
         lblDadosPrincipais.setStyle("-fx-underline: true; -fx-font-weight: bold;");
-        
+
         lblCPF.relocate(70, 240);
         tfCPF.relocate(120, 240);
         tfCPF.setMinWidth(170);
@@ -147,23 +148,23 @@ public class NovoMedico{
         lblDataNasc.relocate(550, 240);
         dpDataNasc.relocate(650, 240);
         dpDataNasc.setMinWidth(200);
-        
+
         lblNCons.relocate(70, 290);
         tfNCons.relocate(170, 290);
         tfNCons.setMaxWidth(120);
-        
+
         lblSiglaCon.relocate(300, 290);
         cbSiglaCons.relocate(400, 290);
         cbSiglaCons.setMinWidth(100);
-        
+
         lblUFCons.relocate(520, 290);
         cbUFCons.relocate(610, 290);
         cbUFCons.setMaxWidth(90);
-        
+
         lblGenero.relocate(700, 290);
         cbGenero.relocate(750, 290);
         cbGenero.setMinWidth(100);
-        
+
         lblEndereco.relocate(30, 340);
         lblEndereco.setStyle("-fx-underline: true; -fx-font-weight: bold;");
 
@@ -198,7 +199,7 @@ public class NovoMedico{
         btnSalvar.relocate(770, 560);
         btnSalvar.setMinWidth(80);
 
-        return scene;
+        stage.setScene(scene);
+        stage.setTitle("Novo MÃ©dico");
     }
-
 }

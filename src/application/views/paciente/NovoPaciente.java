@@ -1,5 +1,6 @@
 package application.views.paciente;
 
+import application.views.Tela;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,25 +12,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class NovoPaciente {
+public class NovoPaciente implements Tela {
 
-    private Scene scene;
+    private final Scene scene;
 
-    private Pane pane;
+    private final Pane pane;
 
     public NovoPaciente() {
         this.pane = new Pane();
         this.scene = new Scene(pane, 900, 600);
     }
 
-    public Scene mountScene(Stage stage) {
+    public void mountScene(Stage stage) {
         Label lblNome = new Label("Nome");
         TextField tfNome = new TextField();
 
         Label lblDataNasc = new Label("Data Nascimento");
         DatePicker dpDataNasc = new DatePicker();
 
-        Label lblGenero = new Label("Gênero");
+        Label lblGenero = new Label("GÃªnero");
         ComboBox<Object> cbGenero = new ComboBox<>();
 
         Label lblCPF = new Label("CPF");
@@ -216,6 +217,7 @@ public class NovoPaciente {
         btnSalvar.relocate(770, 560);
         btnSalvar.setMinWidth(80);
 
-        return scene;
+        stage.setScene(scene);
+        stage.setTitle("Novo Paciente");
     }
 }

@@ -1,9 +1,8 @@
 package application;
 
+import application.views.login.TelaLogin;
 import application.views.medico.NovoMedico;
-import application.views.paciente.NovoPaciente;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -14,8 +13,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene novoPacienteScene = new NovoMedico().mountScene(stage);
-        stage.setScene(novoPacienteScene);
+        new TelaLogin().mountScene(stage);
         stage.setResizable(false);
         stage.show();
     }

@@ -1,7 +1,9 @@
 package application;
 
+import application.views.consulta.NovaConsulta;
 import application.views.login.TelaLogin;
 import application.views.medico.NovoMedico;
+import application.views.paciente.NovoPaciente;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -13,7 +15,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        new TelaLogin().mountScene(stage);
+        new NovaConsulta().mountScene(stage);
         stage.setResizable(false);
         stage.show();
     }

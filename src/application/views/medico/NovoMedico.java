@@ -1,6 +1,8 @@
 package application.views.medico;
 
 import application.views.Tela;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -12,11 +14,68 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class NovoMedico implements Tela {
+public class NovoMedico implements Tela, EventHandler<ActionEvent> {
 
     private final Scene scene;
 
     private final Pane pane;
+    
+    Label lblNome = new Label("Nome");
+    TextField tfNome = new TextField();
+
+    Label lblEspecial = new Label("Especialidades");
+    ComboBox<Object> cbEspecial = new ComboBox<>();
+
+    Label lblDadosPrincipais = new Label("Dados Principais");
+
+    Label lblCPF = new Label("CPF");
+    TextField tfCPF = new TextField();
+
+    Label lblRG = new Label("RG");
+    TextField tfRG = new TextField();
+
+    Label lblDataNasc = new Label("Data Nascimento");
+    DatePicker dpDataNasc = new DatePicker();
+
+    Label lblNCons = new Label("Nº do conselho");
+    TextField tfNCons = new TextField();
+
+    Label lblSiglaCon = new Label("Sigla do conselho");
+    ComboBox<Object> cbSiglaCons = new ComboBox<>();
+
+    Label lblUFCons = new Label("UF do conselho");
+    ComboBox<Object> cbUFCons = new ComboBox<>();
+
+    Label lblGenero = new Label("Gênero");
+    ComboBox<Object> cbGenero = new ComboBox<>();
+
+    Label lblEndereco = new Label("Endereço");
+
+    Label lblLogradouro = new Label("Logradouro");
+    TextField tfLogradouro = new TextField();
+
+    Label lblCEP = new Label("CEP");
+    TextField tfCEP = new TextField();
+
+    Label lblComplemento = new Label("Complemento");
+    TextField tfComplemento = new TextField();
+
+    Label lblNumero = new Label("Número");
+    TextField tfNumero = new TextField();
+
+    Label lblBairro = new Label("Bairro");
+    TextField tfBairro = new TextField();
+
+    Label lblCidade = new Label("Cidade");
+    ComboBox<Object> cbCidade = new ComboBox<>();
+
+    Label lblUF = new Label("UF");
+    ComboBox<Object> cbUF = new ComboBox<>();
+
+    Button btnSalvar = new Button("Salvar");
+
+    Image imgUserAdd = new Image("resources/images/contact.png");
+    ImageView ivUserAdd = new ImageView(imgUserAdd);
 
     public NovoMedico() {
         this.pane = new Pane();
@@ -24,64 +83,7 @@ public class NovoMedico implements Tela {
     }
 
     public void mountScene(Stage stage) {
-        Label lblNome = new Label("Nome");
-        TextField tfNome = new TextField();
-
-        Label lblEspecial = new Label("Especialidades");
-        ComboBox<Object> cbEspecial = new ComboBox<>();
-
-        Label lblDadosPrincipais = new Label("Dados Principais");
-
-        Label lblCPF = new Label("CPF");
-        TextField tfCPF = new TextField();
-
-        Label lblRG = new Label("RG");
-        TextField tfRG = new TextField();
-
-        Label lblDataNasc = new Label("Data Nascimento");
-        DatePicker dpDataNasc = new DatePicker();
-
-        Label lblNCons = new Label("Nº do conselho");
-        TextField tfNCons = new TextField();
-
-        Label lblSiglaCon = new Label("Sigla do conselho");
-        ComboBox<Object> cbSiglaCons = new ComboBox<>();
-
-        Label lblUFCons = new Label("UF do conselho");
-        ComboBox<Object> cbUFCons = new ComboBox<>();
-
-        Label lblGenero = new Label("Gênero");
-        ComboBox<Object> cbGenero = new ComboBox<>();
-
-        Label lblEndereco = new Label("Endereço");
-
-        Label lblLogradouro = new Label("Logradouro");
-        TextField tfLogradouro = new TextField();
-
-        Label lblCEP = new Label("CEP");
-        TextField tfCEP = new TextField();
-
-        Label lblComplemento = new Label("Complemento");
-        TextField tfComplemento = new TextField();
-
-        Label lblNumero = new Label("Número");
-        TextField tfNumero = new TextField();
-
-        Label lblBairro = new Label("Bairro");
-        TextField tfBairro = new TextField();
-
-        Label lblCidade = new Label("Cidade");
-        ComboBox<Object> cbCidade = new ComboBox<>();
-
-        Label lblUF = new Label("UF");
-        ComboBox<Object> cbUF = new ComboBox<>();
-
-        Button btnSalvar = new Button("Salvar");
-
-        Image imgUserAdd = new Image("resources/images/contact.png");
-        ImageView ivUserAdd = new ImageView(imgUserAdd);
-
-        stage.setTitle("Novo Paciente");
+        stage.setTitle("Novo M�dico");
 
         pane.getChildren().add(ivUserAdd);
 
@@ -198,8 +200,15 @@ public class NovoMedico implements Tela {
 
         btnSalvar.relocate(770, 560);
         btnSalvar.setMinWidth(80);
+        btnSalvar.setOnAction(this);
 
         stage.setScene(scene);
-        stage.setTitle("Novo Médico");
     }
+
+	@Override
+	public void handle(ActionEvent event) {
+		if(event.getTarget().equals(btnSalvar)) {
+			
+		}
+	}
 }

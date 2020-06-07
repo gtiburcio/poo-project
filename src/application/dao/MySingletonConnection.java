@@ -12,10 +12,10 @@ public class MySingletonConnection {
 
     private MySingletonConnection() {
         String url = "jdbc:mysql://localhost:3306/";
-        String dbName = "consultorio";
+        String dbName = "clinica";
         String driver = "com.mysql.jdbc.Driver";
-        String userName = "";
-        String password = "";
+        String userName = "gna";
+        String password = "123456";
         try {
             Class.forName(driver).newInstance();
             this.connection = DriverManager.getConnection(url.concat(dbName), userName, password);

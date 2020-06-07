@@ -1,8 +1,7 @@
 package application.views.login;
 
 import application.views.Tela;
-import application.views.medico.NovoMedico;
-import application.views.paciente.NovoPaciente;
+import application.views.principal.TelaPrincipal;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -45,19 +44,19 @@ public class TelaLogin implements Tela {
     public void mountScene(Stage stage) {
         this.stage = stage;
         labelLogin = new Label("Clínica Médica");
-        labelLogin.relocate(40, 250);
+        labelLogin.relocate(320, 250);
         labelLogin.setFont(new Font("Arial", 50));
 
         login = new TextField();
-        login.relocate(80, 350);
+        login.relocate(350, 350);
         login.setMinWidth(250);
 
         password = new PasswordField();
-        password.relocate(80, 450);
+        password.relocate(350, 450);
         password.setMinWidth(250);
 
         buttonLogin = new Button("Entrar");
-        buttonLogin.relocate(110, 550);
+        buttonLogin.relocate(380, 550);
         buttonLogin.setStyle("-fx-background-color: ".concat("#4fddae"));
         buttonLogin.setMinWidth(200);
         buttonLogin.setMinHeight(30);
@@ -68,7 +67,7 @@ public class TelaLogin implements Tela {
         pane.getChildren().add(password);
         pane.getChildren().add(buttonLogin);
 
-        Image imgUserAdd = new Image("resources/images/background2.jpg");
+        Image imgUserAdd = new Image("resources/images/background.jpg");
         BackgroundSize backgroundSize = new BackgroundSize(0, 0, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(imgUserAdd, NO_REPEAT, NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
 
@@ -79,7 +78,7 @@ public class TelaLogin implements Tela {
 
     public void fazerLogin() {
         if (!login.getText().equals("") && !password.getText().equals("")) {
-            new NovoMedico().mountScene(stage);
+            new TelaPrincipal().mountScene(stage);
         } else {
             Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
             dialogoErro.setHeaderText("Login ou senha inválida!");

@@ -1,5 +1,12 @@
 package application.views.paciente;
 
+import application.controller.ConvenioController;
+import application.controller.PlanoController;
+import application.model.Convenio;
+import application.model.Estados;
+import application.model.Genero;
+import application.model.Paciente;
+import application.model.Plano;
 import application.views.Tela;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,11 +21,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
+public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
 
     private final Scene scene;
 
     private final Pane pane;
+    
+    ConvenioController convenioController = new ConvenioController();
+    PlanoController planoController = new PlanoController();
     
     Label lblNome = new Label("Nome");
     TextField tfNome = new TextField();
@@ -27,7 +37,7 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
     DatePicker dpDataNasc = new DatePicker();
 
     Label lblGenero = new Label("Gênero");
-    ComboBox<Object> cbGenero = new ComboBox<>();
+    ComboBox<Genero> cbGenero = new ComboBox<>();
 
     Label lblCPF = new Label("CPF");
     TextField tfCPF = new TextField();
@@ -39,10 +49,10 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
     TextField tfNCart = new TextField();
 
     Label lblConvenio = new Label("Convênio");
-    ComboBox<Object> cbConvenio = new ComboBox<>();
+    ComboBox<Convenio> cbConvenio = new ComboBox<>();
 
     Label lblPlano = new Label("Plano");
-    ComboBox<Object> cbPlano = new ComboBox<>();
+    ComboBox<Plano> cbPlano = new ComboBox<>();
 
     Label lblInforCont = new Label("Informações de Contato");
 
@@ -73,17 +83,17 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
     TextField tfBairro = new TextField();
 
     Label lblCidade = new Label("Cidade");
-    ComboBox<Object> cbCidade = new ComboBox<>();
+    TextField tfCidade = new TextField();
 
     Label lblUF = new Label("UF");
-    ComboBox<Object> cbUF = new ComboBox<>();
+    ComboBox<Estados> cbUF = new ComboBox<>();
 
     Button btnSalvar = new Button("Salvar");
 
     Image imgUserAdd = new Image("resources/images/useradd.png");
     ImageView ivUserAdd = new ImageView(imgUserAdd);
 
-    public NovoPaciente() {
+    public TelaNovoPaciente() {
         this.pane = new Pane();
         this.scene = new Scene(pane, 900, 600);
     }
@@ -128,7 +138,7 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
         pane.getChildren().add(lblBairro);
         pane.getChildren().add(tfBairro);
         pane.getChildren().add(lblCidade);
-        pane.getChildren().add(cbCidade);
+        pane.getChildren().add(tfCidade);
         pane.getChildren().add(lblUF);
         pane.getChildren().add(cbUF);
         pane.getChildren().add(btnSalvar);
@@ -149,7 +159,8 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
         lblGenero.relocate(250, 90);
         cbGenero.relocate(300, 90);
         cbGenero.setMinWidth(100);
-
+        cbGenero.getItems().addAll(Genero.values());
+        
         lblCPF.relocate(440, 90);
         tfCPF.relocate(470, 90);
         tfCPF.setMinWidth(100);
@@ -165,6 +176,13 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
         lblConvenio.relocate(500, 140);
         cbConvenio.relocate(560, 140);
         cbConvenio.setMinWidth(100);
+        try {
+            cbConvenio.getItems().addAll(convenioController.findAll());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        cbConvenio.setOnAction(this);
 
         lblPlano.relocate(700, 140);
         cbPlano.relocate(750, 140);
@@ -206,15 +224,16 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
 
         lblBairro.relocate(70, 490);
         tfBairro.relocate(160, 490);
-        tfBairro.setMinWidth(200);
+        tfBairro.setMaxWidth(150);
 
-        lblCidade.relocate(400, 490);
-        cbCidade.relocate(460, 490);
-        cbCidade.setMinWidth(200);
+        lblCidade.relocate(350, 490);
+        tfCidade.relocate(410, 490);
+        tfCidade.setMinWidth(200);
 
-        lblUF.relocate(720, 490);
-        cbUF.relocate(750, 490);
+        lblUF.relocate(650, 490);
+        cbUF.relocate(680, 490);
         cbUF.setMinWidth(70);
+        cbUF.getItems().addAll(Estados.values());
 
         btnSalvar.relocate(770, 560);
         btnSalvar.setMinWidth(80);
@@ -227,7 +246,35 @@ public class NovoPaciente implements Tela, EventHandler<ActionEvent>{
 	@Override
 	public void handle(ActionEvent event) {
 		if(event.getTarget().equals(btnSalvar)) {
-			
+			Paciente paciente = new Paciente();
+			paciente.setNome(tfNome.getText());
+			paciente.setDataNasc(dpDataNasc.getValue());
+			paciente.setGenero(cbGenero.getValue());
+			paciente.setCpf(tfCPF.getText());
+			paciente.setRg(tfRG.getText());
+			paciente.setNCarteirinha(tfNCart.getText());
+			paciente.setPlano(cbPlano.getValue());
+			paciente.setEmail(tfEmail.getText());
+			paciente.setTelResid(tfTelResid.getText());
+			paciente.setTelCelular(tfTelCel.getText());
+			paciente.setLogradouro(tfLogradouro.getText());
+			paciente.setCep(tfCEP.getText());
+			paciente.setComplemento(tfComplemento.getText());
+			paciente.setNumero(tfNumero.getText());
+			paciente.setBairro(tfNumero.getText());
+			paciente.setCidade(tfNumero.getText());
+			paciente.setUf(cbUF.getValue());
+			System.out.println(paciente);
+		}
+		
+		if(event.getTarget().equals(cbConvenio)) {
+			try {
+				cbPlano.getItems().clear();
+				cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

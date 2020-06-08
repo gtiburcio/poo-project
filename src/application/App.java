@@ -14,8 +14,8 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        new NovaConsulta().mountScene(stage);
+    public void start(Stage stage) {
+        new TelaLogin().mountScene(stage);
         stage.setResizable(false);
         stage.show();
     }

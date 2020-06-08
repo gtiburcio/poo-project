@@ -11,11 +11,11 @@ public class MySingletonConnection {
     public static MySingletonConnection db;
 
     private MySingletonConnection() {
-        String url = "jdbc:mysql://localhost:3306/";
+        String url = "jdbc:mysql://clinica.czbfd8pzebas.sa-east-1.rds.amazonaws.com:3306/";
         String dbName = "clinica";
         String driver = "com.mysql.jdbc.Driver";
-        String userName = "gna";
-        String password = "123456";
+        String userName = "admin";
+        String password = "pass_admin";
         try {
             Class.forName(driver).newInstance();
             this.connection = DriverManager.getConnection(url.concat(dbName), userName, password);

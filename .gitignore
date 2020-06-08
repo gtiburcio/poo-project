@@ -2,6 +2,8 @@ out/
 
 .idea/
 
+bin/
+
 # Compiled class file
 *.class
 

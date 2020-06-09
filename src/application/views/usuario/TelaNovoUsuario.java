@@ -5,6 +5,7 @@ import application.controller.UsuarioController;
 import application.model.Perfil;
 import application.model.Usuario;
 import application.views.Tela;
+import application.views.util.BotaoVoltar;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -98,11 +99,13 @@ public class TelaNovoUsuario implements Tela {
         buttonSalvar.setOnMouseClicked(event -> salvar());
 
 
+        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaUsuarios());
+
         pane.getChildren().addAll(titulo, usuarioView);
         pane.getChildren().addAll(labelNome, nomeText);
         pane.getChildren().addAll(labelLogin, loginText);
         pane.getChildren().addAll(labelPerfil, perfisCombo);
-        pane.getChildren().add(buttonSalvar);
+        pane.getChildren().addAll(buttonSalvar, botaoVoltar.getButton());
 
         stage.setScene(scene);
         stage.setTitle("Novo Usuário");

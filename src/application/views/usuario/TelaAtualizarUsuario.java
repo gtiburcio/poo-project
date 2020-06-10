@@ -5,6 +5,7 @@ import application.controller.UsuarioController;
 import application.model.Perfil;
 import application.model.Usuario;
 import application.views.Tela;
+import application.views.util.BotaoVoltar;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -101,12 +102,13 @@ public class TelaAtualizarUsuario implements Tela {
         buttonAtualizar.setMinHeight(30);
         buttonAtualizar.setOnMouseClicked(event -> salvar());
 
+        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaUsuarios());
 
         pane.getChildren().addAll(titulo, usuarioView);
         pane.getChildren().addAll(labelNome, nomeText);
         pane.getChildren().addAll(labelLogin, loginText);
         pane.getChildren().addAll(labelPerfil, perfisCombo);
-        pane.getChildren().add(buttonAtualizar);
+        pane.getChildren().addAll(buttonAtualizar, botaoVoltar.getButton());
 
         stage.setScene(scene);
         stage.setTitle("Atualizar Usuário");
@@ -150,7 +152,9 @@ public class TelaAtualizarUsuario implements Tela {
         }
         boolean isDuplicated = false;
         try {
-            isDuplicated = loginIsDuplicated();
+            if (!loginText.getText().equals(usuario.getLogin())) {
+                isDuplicated = loginIsDuplicated();
+            }
         } catch (Exception exception) {
             errorMessage("Erro ao buscar usuários, tente novamente mais tarde...");
             return false;

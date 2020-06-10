@@ -3,23 +3,27 @@ package application.views.paciente;
 import application.controller.ConvenioController;
 import application.controller.PlanoController;
 import application.model.Convenio;
-import application.model.Estados;
-import application.model.Genero;
 import application.model.Paciente;
 import application.model.Plano;
+import application.model.enums.Estados;
+import application.model.enums.Genero;
 import application.views.Tela;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
 
@@ -176,16 +180,12 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
         lblConvenio.relocate(500, 140);
         cbConvenio.relocate(560, 140);
         cbConvenio.setMinWidth(100);
-        try {
-            cbConvenio.getItems().addAll(convenioController.findAll());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        getConvenioComboBox();
         cbConvenio.setOnAction(this);
 
         lblPlano.relocate(700, 140);
         cbPlano.relocate(750, 140);
+        cbPlano.setMaxWidth(100);
         cbPlano.setMinWidth(100);
 
         lblInforCont.relocate(30, 190);
@@ -242,7 +242,7 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
         stage.setScene(scene);
         stage.setTitle("Novo Paciente");
     }
-
+    
 	@Override
 	public void handle(ActionEvent event) {
 		if(event.getTarget().equals(btnSalvar)) {
@@ -268,13 +268,68 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
 		}
 		
 		if(event.getTarget().equals(cbConvenio)) {
-			try {
-				cbPlano.getItems().clear();
-				cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			getPlanoComboBox();
 		}
 	}
+	
+
+    
+    private class ConvenioCell extends ListCell<Convenio> {
+
+        @Override
+        protected void updateItem(Convenio covenio, boolean empty) {
+            super.updateItem(covenio, empty);
+            if (covenio != null) {
+                setText(covenio.getNome());
+            } else {
+                setText(null);
+            }
+        }
+    }
+    
+    private void getConvenioComboBox() {
+    	try {
+             cbConvenio.getItems().addAll(convenioController.findAll());
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+    	cbConvenio.setCellFactory(new Callback<ListView<Convenio>, ListCell<Convenio>>() {
+            @Override
+            public ListCell<Convenio> call(ListView<Convenio> convenios) {
+                return new ConvenioCell();
+            }
+        });
+        cbConvenio.setButtonCell(new ConvenioCell());
+    }
+	
+
+    
+    private class PlanoCell extends ListCell<Plano> {
+
+        @Override
+        protected void updateItem(Plano item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+                setText(item.getNome());
+            } else {
+                setText(null);
+            }
+        }
+    }
+    
+    private void getPlanoComboBox() {
+    	try {
+			cbPlano.getItems().clear();
+			cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	cbPlano.setCellFactory(new Callback<ListView<Plano>, ListCell<Plano>>() {
+            @Override
+            public ListCell<Plano> call(ListView<Plano> planos) {
+                return new PlanoCell();
+            }
+        });
+        cbPlano.setButtonCell(new PlanoCell());
+    }
 }

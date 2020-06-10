@@ -1,4 +1,4 @@
-package application.model;
+package application.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum Genero {
 	M("Masculino"),
 	F("Feminino"),
-	N("N„o bin·rio"),
+	N("N√£o bin√°rio"),
 	O("Outro");
 
     private String nome;

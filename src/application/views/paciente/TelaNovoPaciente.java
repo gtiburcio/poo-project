@@ -3,10 +3,10 @@ package application.views.paciente;
 import application.controller.ConvenioController;
 import application.controller.PlanoController;
 import application.model.Convenio;
-import application.model.Estados;
-import application.model.Genero;
 import application.model.Paciente;
 import application.model.Plano;
+import application.model.enums.Estados;
+import application.model.enums.Genero;
 import application.views.Tela;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,237 +15,235 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
-public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
+public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 
-    private final Scene scene;
+	private final Scene scene;
 
-    private final Pane pane;
-    
-    ConvenioController convenioController = new ConvenioController();
-    PlanoController planoController = new PlanoController();
-    
-    Label lblNome = new Label("Nome");
-    TextField tfNome = new TextField();
+	private final Pane pane;
 
-    Label lblDataNasc = new Label("Data Nascimento");
-    DatePicker dpDataNasc = new DatePicker();
+	ConvenioController convenioController = new ConvenioController();
+	PlanoController planoController = new PlanoController();
 
-    Label lblGenero = new Label("Gênero");
-    ComboBox<Genero> cbGenero = new ComboBox<>();
+	Label lblNome = new Label("Nome");
+	TextField tfNome = new TextField();
 
-    Label lblCPF = new Label("CPF");
-    TextField tfCPF = new TextField();
+	Label lblDataNasc = new Label("Data Nascimento");
+	DatePicker dpDataNasc = new DatePicker();
 
-    Label lblRG = new Label("RG");
-    TextField tfRG = new TextField();
+	Label lblGenero = new Label("Gênero");
+	ComboBox<Genero> cbGenero = new ComboBox<>();
 
-    Label lblNCart = new Label("Nº Carteirinha");
-    TextField tfNCart = new TextField();
+	Label lblCPF = new Label("CPF");
+	TextField tfCPF = new TextField();
 
-    Label lblConvenio = new Label("Convênio");
-    ComboBox<Convenio> cbConvenio = new ComboBox<>();
+	Label lblRG = new Label("RG");
+	TextField tfRG = new TextField();
 
-    Label lblPlano = new Label("Plano");
-    ComboBox<Plano> cbPlano = new ComboBox<>();
+	Label lblNCart = new Label("Nº Carteirinha");
+	TextField tfNCart = new TextField();
 
-    Label lblInforCont = new Label("Informações de Contato");
+	Label lblConvenio = new Label("Convênio");
+	ComboBox<Convenio> cbConvenio = new ComboBox<>();
 
-    Label lblEmail = new Label("E-mail");
-    TextField tfEmail = new TextField();
+	Label lblPlano = new Label("Plano");
+	ComboBox<Plano> cbPlano = new ComboBox<>();
 
-    Label lblTelResid = new Label("Telefone Resid.");
-    TextField tfTelResid = new TextField();
+	Label lblInforCont = new Label("Informações de Contato");
 
-    Label lblTelCel = new Label("Telefone Cel.");
-    TextField tfTelCel = new TextField();
+	Label lblEmail = new Label("E-mail");
+	TextField tfEmail = new TextField();
 
-    Label lblEndereco = new Label("Endereço");
+	Label lblTelResid = new Label("Telefone Resid.");
+	TextField tfTelResid = new TextField();
 
-    Label lblLogradouro = new Label("Logradouro");
-    TextField tfLogradouro = new TextField();
+	Label lblTelCel = new Label("Telefone Cel.");
+	TextField tfTelCel = new TextField();
 
-    Label lblCEP = new Label("CEP");
-    TextField tfCEP = new TextField();
+	Label lblEndereco = new Label("Endereço");
 
-    Label lblComplemento = new Label("Complemento");
-    TextField tfComplemento = new TextField();
+	Label lblLogradouro = new Label("Logradouro");
+	TextField tfLogradouro = new TextField();
 
-    Label lblNumero = new Label("Número");
-    TextField tfNumero = new TextField();
+	Label lblCEP = new Label("CEP");
+	TextField tfCEP = new TextField();
 
-    Label lblBairro = new Label("Bairro");
-    TextField tfBairro = new TextField();
+	Label lblComplemento = new Label("Complemento");
+	TextField tfComplemento = new TextField();
 
-    Label lblCidade = new Label("Cidade");
-    TextField tfCidade = new TextField();
+	Label lblNumero = new Label("Número");
+	TextField tfNumero = new TextField();
 
-    Label lblUF = new Label("UF");
-    ComboBox<Estados> cbUF = new ComboBox<>();
+	Label lblBairro = new Label("Bairro");
+	TextField tfBairro = new TextField();
 
-    Button btnSalvar = new Button("Salvar");
+	Label lblCidade = new Label("Cidade");
+	TextField tfCidade = new TextField();
 
-    Image imgUserAdd = new Image("resources/images/useradd.png");
-    ImageView ivUserAdd = new ImageView(imgUserAdd);
+	Label lblUF = new Label("UF");
+	ComboBox<Estados> cbUF = new ComboBox<>();
 
-    public TelaNovoPaciente() {
-        this.pane = new Pane();
-        this.scene = new Scene(pane, 900, 600);
-    }
+	Button btnSalvar = new Button("Salvar");
 
-    public void mountScene(Stage stage) {
-        stage.setTitle("Novo Paciente");
+	Image imgUserAdd = new Image("resources/images/useradd.png");
+	ImageView ivUserAdd = new ImageView(imgUserAdd);
 
-        pane.getChildren().add(ivUserAdd);
+	public TelaNovoPaciente() {
+		this.pane = new Pane();
+		this.scene = new Scene(pane, 900, 600);
+	}
 
-        pane.getChildren().add(lblNome);
-        pane.getChildren().add(tfNome);
-        pane.getChildren().add(lblDataNasc);
-        pane.getChildren().add(dpDataNasc);
-        pane.getChildren().add(lblGenero);
-        pane.getChildren().add(cbGenero);
-        pane.getChildren().add(lblCPF);
-        pane.getChildren().add(tfCPF);
-        pane.getChildren().add(lblRG);
-        pane.getChildren().add(tfRG);
-        pane.getChildren().add(lblNCart);
-        pane.getChildren().add(tfNCart);
-        pane.getChildren().add(lblConvenio);
-        pane.getChildren().add(cbConvenio);
-        pane.getChildren().add(lblPlano);
-        pane.getChildren().add(cbPlano);
-        pane.getChildren().add(lblInforCont);
-        pane.getChildren().add(lblEmail);
-        pane.getChildren().add(tfEmail);
-        pane.getChildren().add(lblTelResid);
-        pane.getChildren().add(tfTelResid);
-        pane.getChildren().add(lblTelCel);
-        pane.getChildren().add(tfTelCel);
-        pane.getChildren().add(lblEndereco);
-        pane.getChildren().add(lblLogradouro);
-        pane.getChildren().add(tfLogradouro);
-        pane.getChildren().add(lblCEP);
-        pane.getChildren().add(tfCEP);
-        pane.getChildren().add(lblComplemento);
-        pane.getChildren().add(tfComplemento);
-        pane.getChildren().add(lblNumero);
-        pane.getChildren().add(tfNumero);
-        pane.getChildren().add(lblBairro);
-        pane.getChildren().add(tfBairro);
-        pane.getChildren().add(lblCidade);
-        pane.getChildren().add(tfCidade);
-        pane.getChildren().add(lblUF);
-        pane.getChildren().add(cbUF);
-        pane.getChildren().add(btnSalvar);
+	public void mountScene(Stage stage) {
+		stage.setTitle("Novo Paciente");
 
-        ivUserAdd.relocate(50, 50);
-        ivUserAdd.setFitHeight(100);
-        ivUserAdd.setFitWidth(100);
-        ivUserAdd.setPreserveRatio(true);
+		pane.getChildren().add(ivUserAdd);
 
-        lblNome.relocate(250, 40);
-        tfNome.relocate(300, 40);
-        tfNome.setMinWidth(200);
+		pane.getChildren().add(lblNome);
+		pane.getChildren().add(tfNome);
+		pane.getChildren().add(lblDataNasc);
+		pane.getChildren().add(dpDataNasc);
+		pane.getChildren().add(lblGenero);
+		pane.getChildren().add(cbGenero);
+		pane.getChildren().add(lblCPF);
+		pane.getChildren().add(tfCPF);
+		pane.getChildren().add(lblRG);
+		pane.getChildren().add(tfRG);
+		pane.getChildren().add(lblNCart);
+		pane.getChildren().add(tfNCart);
+		pane.getChildren().add(lblConvenio);
+		pane.getChildren().add(cbConvenio);
+		pane.getChildren().add(lblPlano);
+		pane.getChildren().add(cbPlano);
+		pane.getChildren().add(lblInforCont);
+		pane.getChildren().add(lblEmail);
+		pane.getChildren().add(tfEmail);
+		pane.getChildren().add(lblTelResid);
+		pane.getChildren().add(tfTelResid);
+		pane.getChildren().add(lblTelCel);
+		pane.getChildren().add(tfTelCel);
+		pane.getChildren().add(lblEndereco);
+		pane.getChildren().add(lblLogradouro);
+		pane.getChildren().add(tfLogradouro);
+		pane.getChildren().add(lblCEP);
+		pane.getChildren().add(tfCEP);
+		pane.getChildren().add(lblComplemento);
+		pane.getChildren().add(tfComplemento);
+		pane.getChildren().add(lblNumero);
+		pane.getChildren().add(tfNumero);
+		pane.getChildren().add(lblBairro);
+		pane.getChildren().add(tfBairro);
+		pane.getChildren().add(lblCidade);
+		pane.getChildren().add(tfCidade);
+		pane.getChildren().add(lblUF);
+		pane.getChildren().add(cbUF);
+		pane.getChildren().add(btnSalvar);
 
-        lblDataNasc.relocate(550, 40);
-        dpDataNasc.relocate(650, 40);
-        dpDataNasc.setMinWidth(200);
+		ivUserAdd.relocate(50, 50);
+		ivUserAdd.setFitHeight(100);
+		ivUserAdd.setFitWidth(100);
+		ivUserAdd.setPreserveRatio(true);
 
-        lblGenero.relocate(250, 90);
-        cbGenero.relocate(300, 90);
-        cbGenero.setMinWidth(100);
-        cbGenero.getItems().addAll(Genero.values());
-        
-        lblCPF.relocate(440, 90);
-        tfCPF.relocate(470, 90);
-        tfCPF.setMinWidth(100);
+		lblNome.relocate(250, 40);
+		tfNome.relocate(300, 40);
+		tfNome.setMinWidth(200);
 
-        lblRG.relocate(670, 90);
-        tfRG.relocate(700, 90);
-        tfRG.setMinWidth(100);
+		lblDataNasc.relocate(550, 40);
+		dpDataNasc.relocate(650, 40);
+		dpDataNasc.setMinWidth(200);
 
-        lblNCart.relocate(250, 140);
-        tfNCart.relocate(330, 140);
-        tfNCart.setMinWidth(100);
+		lblGenero.relocate(250, 90);
+		cbGenero.relocate(300, 90);
+		cbGenero.setMinWidth(100);
+		cbGenero.getItems().addAll(Genero.values());
 
-        lblConvenio.relocate(500, 140);
-        cbConvenio.relocate(560, 140);
-        cbConvenio.setMinWidth(100);
-        try {
-            cbConvenio.getItems().addAll(convenioController.findAll());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        cbConvenio.setOnAction(this);
+		lblCPF.relocate(440, 90);
+		tfCPF.relocate(470, 90);
+		tfCPF.setMinWidth(100);
 
-        lblPlano.relocate(700, 140);
-        cbPlano.relocate(750, 140);
-        cbPlano.setMinWidth(100);
+		lblRG.relocate(670, 90);
+		tfRG.relocate(700, 90);
+		tfRG.setMinWidth(100);
 
-        lblInforCont.relocate(30, 190);
-        lblInforCont.setStyle("-fx-underline: true; -fx-font-weight: bold;");
+		lblNCart.relocate(250, 140);
+		tfNCart.relocate(330, 140);
+		tfNCart.setMinWidth(100);
 
-        lblEmail.relocate(70, 240);
-        tfEmail.relocate(120, 240);
-        tfEmail.setMinWidth(300);
+		lblConvenio.relocate(500, 140);
+		cbConvenio.relocate(560, 140);
+		cbConvenio.setMinWidth(100);
+		getConvenioComboBox();
+		cbConvenio.setOnAction(this);
 
-        lblTelResid.relocate(450, 240);
-        tfTelResid.relocate(550, 240);
-        tfTelResid.setMinWidth(300);
+		lblPlano.relocate(700, 140);
+		cbPlano.relocate(750, 140);
+		cbPlano.setPrefWidth(100);
 
-        lblTelCel.relocate(460, 290);
-        tfTelCel.relocate(550, 290);
-        tfTelCel.setMinWidth(300);
+		lblInforCont.relocate(30, 190);
+		lblInforCont.setStyle("-fx-underline: true; -fx-font-weight: bold;");
 
-        lblEndereco.relocate(30, 340);
-        lblEndereco.setStyle("-fx-underline: true; -fx-font-weight: bold;");
+		lblEmail.relocate(70, 240);
+		tfEmail.relocate(120, 240);
+		tfEmail.setMinWidth(300);
 
-        lblLogradouro.relocate(70, 390);
-        tfLogradouro.relocate(150, 390);
-        tfLogradouro.setMinWidth(270);
+		lblTelResid.relocate(450, 240);
+		tfTelResid.relocate(550, 240);
+		tfTelResid.setMinWidth(300);
 
-        lblCEP.relocate(500, 390);
-        tfCEP.relocate(550, 390);
-        tfCEP.setMinWidth(70);
+		lblTelCel.relocate(460, 290);
+		tfTelCel.relocate(550, 290);
+		tfTelCel.setMinWidth(300);
 
-        lblComplemento.relocate(70, 440);
-        tfComplemento.relocate(160, 440);
-        tfComplemento.setMinWidth(200);
+		lblEndereco.relocate(30, 340);
+		lblEndereco.setStyle("-fx-underline: true; -fx-font-weight: bold;");
 
-        lblNumero.relocate(500, 440);
-        tfNumero.relocate(550, 440);
-        tfNumero.setMinWidth(70);
+		lblLogradouro.relocate(70, 390);
+		tfLogradouro.relocate(150, 390);
+		tfLogradouro.setMinWidth(270);
 
-        lblBairro.relocate(70, 490);
-        tfBairro.relocate(160, 490);
-        tfBairro.setMaxWidth(150);
+		lblCEP.relocate(500, 390);
+		tfCEP.relocate(550, 390);
+		tfCEP.setMinWidth(70);
 
-        lblCidade.relocate(350, 490);
-        tfCidade.relocate(410, 490);
-        tfCidade.setMinWidth(200);
+		lblComplemento.relocate(70, 440);
+		tfComplemento.relocate(160, 440);
+		tfComplemento.setMinWidth(200);
 
-        lblUF.relocate(650, 490);
-        cbUF.relocate(680, 490);
-        cbUF.setMinWidth(70);
-        cbUF.getItems().addAll(Estados.values());
+		lblNumero.relocate(500, 440);
+		tfNumero.relocate(550, 440);
+		tfNumero.setMinWidth(70);
 
-        btnSalvar.relocate(770, 560);
-        btnSalvar.setMinWidth(80);
-        btnSalvar.setOnAction(this);
+		lblBairro.relocate(70, 490);
+		tfBairro.relocate(160, 490);
+		tfBairro.setMaxWidth(150);
 
-        stage.setScene(scene);
-        stage.setTitle("Novo Paciente");
-    }
+		lblCidade.relocate(350, 490);
+		tfCidade.relocate(410, 490);
+		tfCidade.setMinWidth(200);
+
+		lblUF.relocate(650, 490);
+		cbUF.relocate(680, 490);
+		cbUF.setMinWidth(70);
+		cbUF.getItems().addAll(Estados.values());
+
+		btnSalvar.relocate(770, 560);
+		btnSalvar.setMinWidth(80);
+		btnSalvar.setOnAction(this);
+
+		stage.setScene(scene);
+		stage.setTitle("Novo Paciente");
+	}
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getTarget().equals(btnSalvar)) {
+		if (event.getTarget().equals(btnSalvar)) {
 			Paciente paciente = new Paciente();
 			paciente.setNome(tfNome.getText());
 			paciente.setDataNasc(dpDataNasc.getValue());
@@ -266,15 +264,66 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent>{
 			paciente.setUf(cbUF.getValue());
 			System.out.println(paciente);
 		}
-		
-		if(event.getTarget().equals(cbConvenio)) {
-			try {
-				cbPlano.getItems().clear();
-				cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		if (event.getTarget().equals(cbConvenio)) {
+			getPlanoComboBox();
+		}
+	}
+
+	private class ConvenioCell extends ListCell<Convenio> {
+
+		@Override
+		protected void updateItem(Convenio covenio, boolean empty) {
+			super.updateItem(covenio, empty);
+			if (covenio != null) {
+				setText(covenio.getNome());
+			} else {
+				setText(null);
 			}
 		}
+	}
+
+	private void getConvenioComboBox() {
+		try {
+			cbConvenio.getItems().addAll(convenioController.findAll());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		cbConvenio.setCellFactory(new Callback<ListView<Convenio>, ListCell<Convenio>>() {
+			@Override
+			public ListCell<Convenio> call(ListView<Convenio> convenios) {
+				return new ConvenioCell();
+			}
+		});
+		cbConvenio.setButtonCell(new ConvenioCell());
+	}
+
+	private class PlanoCell extends ListCell<Plano> {
+
+		@Override
+		protected void updateItem(Plano item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item != null) {
+				setText(item.getNome());
+			} else {
+				setText(null);
+			}
+		}
+	}
+
+	private void getPlanoComboBox() {
+		try {
+			cbPlano.getItems().clear();
+			cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		cbPlano.setCellFactory(new Callback<ListView<Plano>, ListCell<Plano>>() {
+			@Override
+			public ListCell<Plano> call(ListView<Plano> planos) {
+				return new PlanoCell();
+			}
+		});
+		cbPlano.setButtonCell(new PlanoCell());
 	}
 }

@@ -32,7 +32,7 @@ public class NovaConsulta implements Tela, EventHandler<ActionEvent> {
 	Button btnAddSintoma = new Button("+");
 	ListView<String> lvSintoma = new ListView<String>();
 	
-	Label lblPrescricao = new Label("Prescrições");
+	Label lblPrescricao = new Label("PrescriÃ§Ãµes");
 	TextField tfPrescricao = new TextField();
 	Button btnAddPrescricao = new Button("+");
 	ListView<String> lvPrescricao = new ListView<String>();

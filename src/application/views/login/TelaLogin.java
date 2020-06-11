@@ -3,7 +3,6 @@ package application.views.login;
 import application.views.Tela;
 import application.views.principal.TelaPrincipal;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -27,13 +26,9 @@ public class TelaLogin implements Tela {
 
     private final Pane pane;
 
-    private Label labelLogin;
-
     private TextField login;
 
     private PasswordField password;
-
-    private Button buttonLogin;
 
     public TelaLogin() {
         this.pane = new Pane();
@@ -43,20 +38,20 @@ public class TelaLogin implements Tela {
     @Override
     public void mountScene(Stage stage) {
         this.stage = stage;
-        labelLogin = new Label("Clínica Médica");
-        labelLogin.relocate(320, 250);
+        Label labelLogin = new Label("Clínica Médica");
+        labelLogin.relocate(330, 250);
         labelLogin.setFont(new Font("Arial", 50));
 
         login = new TextField();
-        login.relocate(350, 350);
+        login.relocate(360, 350);
         login.setMinWidth(250);
 
         password = new PasswordField();
-        password.relocate(350, 450);
+        password.relocate(360, 450);
         password.setMinWidth(250);
 
-        buttonLogin = new Button("Entrar");
-        buttonLogin.relocate(380, 550);
+        Button buttonLogin = new Button("Entrar");
+        buttonLogin.relocate(390, 550);
         buttonLogin.setStyle("-fx-background-color: ".concat("#4fddae"));
         buttonLogin.setMinWidth(200);
         buttonLogin.setMinHeight(30);
@@ -80,9 +75,7 @@ public class TelaLogin implements Tela {
         if (!login.getText().equals("") && !password.getText().equals("")) {
             new TelaPrincipal().mountScene(stage);
         } else {
-            Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
-            dialogoErro.setHeaderText("Login ou senha inválida!");
-            dialogoErro.showAndWait();
+            errorMessage("Login ou senha inválida!");
         }
     }
 }

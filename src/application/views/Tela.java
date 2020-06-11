@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface Tela {
 
-    void mountScene(Stage stage) throws Exception;
+    void mountScene(Stage stage);
 
     default void successMessage(String message) {
         Alert dialogoSuccess = new Alert(Alert.AlertType.CONFIRMATION);

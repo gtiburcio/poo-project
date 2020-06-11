@@ -2,7 +2,7 @@ package application.views.principal;
 
 import application.views.Tela;
 import application.views.medico.NovoMedico;
-import application.views.paciente.TelaNovoPaciente;
+import application.views.paciente.TelaPacientes;
 import application.views.usuario.TelaUsuarios;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -44,7 +44,7 @@ public class TelaPrincipal implements Tela {
 
         labelPaciente.setOnMouseEntered(event -> labelPaciente.setStyle(menuBorder));
         labelPaciente.setOnMouseExited(event -> labelPaciente.setStyle(null));
-        labelPaciente.setOnMouseClicked(event -> new TelaNovoPaciente().mountScene(stage));
+        labelPaciente.setOnMouseClicked(event -> new TelaPacientes().mountScene(stage));
 
         Image medicoImage = new Image("resources/images/medico.png");
         ImageView medicoView = new ImageView(medicoImage);

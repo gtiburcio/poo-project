@@ -18,14 +18,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 
@@ -190,6 +187,8 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		lblConvenio.relocate(500, 140);
 		cbConvenio.relocate(560, 140);
 		cbConvenio.setMinWidth(100);
+		getConvenioComboBox();
+		getPlanoComboBox();
 		cbConvenio.setOnAction(this);
 
 		lblPlano.relocate(700, 140);
@@ -259,7 +258,8 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		tfRG.setText(paciente.getRg());
 		tfNCart.setText(paciente.getNCarteirinha());
 		if(paciente.getPlano() != null) {
-			getConvenioComboBox();
+			cbPlano.setValue(paciente.getPlano());
+			cbConvenio.setValue(paciente.getPlano().getConvenio());
 		}
 		tfEmail.setText(paciente.getEmail());
 		tfTelResid.setText(paciente.getTelResid());
@@ -333,19 +333,6 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		return true;
 	}
 
-	private class ConvenioCell extends ListCell<Convenio> {
-
-		@Override
-		protected void updateItem(Convenio covenio, boolean empty) {
-			super.updateItem(covenio, empty);
-			if (covenio != null) {
-				setText(covenio.getNome());
-			} else {
-				setText(null);
-			}
-		}
-	}
-
 	private void getConvenioComboBox() {
 		try {
 			cbConvenio.getItems().add(new Convenio(0, ""));
@@ -353,28 +340,8 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		cbConvenio.setCellFactory(new Callback<ListView<Convenio>, ListCell<Convenio>>() {
-			@Override
-			public ListCell<Convenio> call(ListView<Convenio> convenios) {
-				return new ConvenioCell();
-			}
-		});
-		cbConvenio.setButtonCell(new ConvenioCell());
 	}
-
-	private class PlanoCell extends ListCell<Plano> {
-
-		@Override
-		protected void updateItem(Plano item, boolean empty) {
-			super.updateItem(item, empty);
-			if (item != null) {
-				setText(item.getNome());
-			} else {
-				setText(null);
-			}
-		}
-	}
-
+	
 	private void getPlanoComboBox() {
 		try {
 			if (cbConvenio.getValue() != null) {
@@ -384,12 +351,5 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		cbPlano.setCellFactory(new Callback<ListView<Plano>, ListCell<Plano>>() {
-			@Override
-			public ListCell<Plano> call(ListView<Plano> planos) {
-				return new PlanoCell();
-			}
-		});
-		cbPlano.setButtonCell(new PlanoCell());
 	}
 }

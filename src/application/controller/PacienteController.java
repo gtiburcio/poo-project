@@ -24,6 +24,7 @@ public class PacienteController {
 		return new PacienteDAO().findAll().stream().map(model -> (Paciente) model).peek(paciente -> {
 			try {
 				paciente.setPlano(new PlanoController().findById(paciente.getPlano().getId()));
+				paciente.getPlano().setConvenio(new ConvenioController().findById(paciente.getPlano().getConvenio().getId()));
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}

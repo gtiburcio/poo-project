@@ -14,4 +14,9 @@ public class Convenio implements IModel {
     private long id;
 
     private String nome;
+
+	@Override
+	public String toString() {
+		return nome;
+	}
 }

@@ -50,4 +50,9 @@ public class Paciente implements IModel {
 	private String cidade;
 
 	private Estados uf;
+	
+	@Override
+	public String toString() {
+		return nome;
+	}
 }

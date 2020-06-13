@@ -16,4 +16,9 @@ public class Plano implements IModel {
     private String nome;
     
     private Convenio convenio;
+    
+    @Override
+	public String toString() {
+		return nome;
+	}
 }

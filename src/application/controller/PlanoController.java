@@ -10,7 +10,13 @@ import java.util.stream.Collectors;
 public class PlanoController {
 
     public List<Plano> findAll() throws Exception {
-        return new PlanoDAO().findAll().stream().map(model -> (Plano) model).collect(Collectors.toList());
+        return new PlanoDAO().findAll().stream().map(model -> (Plano) model).peek(plano -> {
+			try {
+				plano.setConvenio(new ConvenioController().findById(plano.getConvenio().getId()));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}).collect(Collectors.toList());
     }
 
     public Plano findById(long id) throws Exception {

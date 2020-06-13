@@ -25,13 +25,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
+public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 
 	private Stage stage;
 
 	private final Scene scene;
 
 	private final Pane pane;
+
+	private Paciente paciente;
 
 	ConvenioController convenioController = new ConvenioController();
 	PlanoController planoController = new PlanoController();
@@ -100,7 +102,9 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 	Image imgUserAdd = new Image("resources/images/paciente.png");
 	ImageView ivUserAdd = new ImageView(imgUserAdd);
 
-	public TelaNovoPaciente() {
+	public TelaAtualizarPaciente(Paciente paciente) {
+		this.paciente = paciente;
+		entityToView(paciente);
 		this.pane = new Pane();
 		this.scene = new Scene(pane, 900, 600);
 	}
@@ -109,7 +113,7 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 		this.stage = stage;
 		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPacientes());
 
-		stage.setTitle("Novo Paciente");
+		stage.setTitle("Atualizar Paciente");
 
 		pane.getChildren().add(ivUserAdd);
 
@@ -188,6 +192,7 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 		cbConvenio.relocate(560, 140);
 		cbConvenio.setMinWidth(100);
 		getConvenioComboBox();
+		getPlanoComboBox();
 		cbConvenio.setOnAction(this);
 
 		lblPlano.relocate(700, 140);
@@ -250,39 +255,30 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 		stage.setTitle("Novo Paciente");
 	}
 
-	@Override
-	public void handle(ActionEvent event) {
-		if (event.getTarget().equals(btnSalvar)) {
-			salvar();
+	public void entityToView(Paciente paciente) {
+		tfNome.setText(paciente.getNome());
+		dpDataNasc.setValue(paciente.getDataNasc());
+		cbGenero.setValue(paciente.getGenero());
+		tfCPF.setText(paciente.getCpf());
+		tfRG.setText(paciente.getRg());
+		tfNCart.setText(paciente.getNCarteirinha());
+		if (paciente.getPlano() != null) {
+			cbPlano.setValue(paciente.getPlano());
+			cbConvenio.setValue(paciente.getPlano().getConvenio());
 		}
-
-		if (event.getTarget().equals(cbConvenio)) {
-			getPlanoComboBox();
-		}
+		tfEmail.setText(paciente.getEmail());
+		tfTelResid.setText(paciente.getTelResid());
+		tfTelCel.setText(paciente.getTelCelular());
+		tfLogradouro.setText(paciente.getLogradouro());
+		tfCEP.setText(paciente.getCep());
+		tfComplemento.setText(paciente.getComplemento());
+		tfNumero.setText(paciente.getNumero());
+		tfBairro.setText(paciente.getBairro());
+		tfCidade.setText(paciente.getCidade());
+		cbUF.setValue(paciente.getUf());
 	}
 
-	public void getPlanoComboBox() {
-		try {
-			if (cbConvenio.getValue() != null) {
-				cbPlano.getItems().clear();
-				cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void getConvenioComboBox() {
-		try {
-			cbConvenio.getItems().add(new Convenio(0, ""));
-			cbConvenio.getItems().addAll(convenioController.findAll());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Paciente viewToEntity() {
-		Paciente paciente = new Paciente();
+	public void viewToEntity() {
 		paciente.setNome(tfNome.getText());
 		paciente.setDataNasc(dpDataNasc.getValue());
 		paciente.setGenero(cbGenero.getValue());
@@ -300,15 +296,25 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 		paciente.setBairro(tfBairro.getText());
 		paciente.setCidade(tfCidade.getText());
 		paciente.setUf(cbUF.getValue());
-		return paciente;
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		if (event.getTarget().equals(btnSalvar)) {
+			salvar();
+		}
+
+		if (event.getTarget().equals(cbConvenio)) {
+			getPlanoComboBox();
+		}
 	}
 
 	private void salvar() {
 		if (validFields()) {
-			Paciente paciente = viewToEntity();
+			viewToEntity();
 			try {
-				pacienteController.save(paciente);
-				successMessage("Paciente ".concat(paciente.getNome()).concat(" foi salvo com sucesso!"));
+				pacienteController.update(paciente);
+				successMessage("Paciente ".concat(paciente.getNome()).concat(" foi atualizado com sucesso!"));
 				new TelaPacientes().mountScene(stage);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -330,5 +336,25 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 			return false;
 		}
 		return true;
+	}
+
+	private void getConvenioComboBox() {
+		try {
+			cbConvenio.getItems().add(new Convenio(0, ""));
+			cbConvenio.getItems().addAll(convenioController.findAll());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void getPlanoComboBox() {
+		try {
+			if (cbConvenio.getValue() != null) {
+				cbPlano.getItems().clear();
+				cbPlano.getItems().addAll(planoController.findByConvenio(cbConvenio.getValue()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package application.views.principal;
 
 import application.views.Tela;
+import application.views.especialidade.TelaNovaEspecialidade;
 import application.views.medico.NovoMedico;
 import application.views.paciente.TelaPacientes;
 import application.views.usuario.TelaUsuarios;
@@ -73,6 +74,7 @@ public class TelaPrincipal implements Tela {
 
         labelEspecialidade.setOnMouseEntered(event -> labelEspecialidade.setStyle(menuBorder));
         labelEspecialidade.setOnMouseExited(event -> labelEspecialidade.setStyle(null));
+        labelEspecialidade.setOnMouseExited(event -> new TelaNovaEspecialidade().mountScene(stage));
 
 
         Image agendaImage = new Image("resources/images/agenda.png");

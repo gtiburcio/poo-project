@@ -1,9 +1,8 @@
 package application.dao;
 
-import application.model.IModel;
-
-import java.sql.SQLException;
 import java.util.List;
+
+import application.model.IModel;
 
 public interface IDAO {
 

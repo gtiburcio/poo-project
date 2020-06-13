@@ -83,7 +83,7 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
     }
 
     public void mountScene(Stage stage) {
-        stage.setTitle("Novo Médico");
+        stage.setTitle("Novo Mï¿½dico");
 
         pane.getChildren().add(ivUserAdd);
 

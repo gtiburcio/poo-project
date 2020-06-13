@@ -11,6 +11,7 @@ import application.model.Plano;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 import application.views.Tela;
+import application.views.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -31,7 +32,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 	private final Scene scene;
 
 	private final Pane pane;
-	
+
 	private Paciente paciente;
 
 	ConvenioController convenioController = new ConvenioController();
@@ -98,7 +99,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 
 	Button btnSalvar = new Button("Salvar");
 
-	Image imgUserAdd = new Image("resources/images/useradd.png");
+	Image imgUserAdd = new Image("resources/images/paciente.png");
 	ImageView ivUserAdd = new ImageView(imgUserAdd);
 
 	public TelaAtualizarPaciente(Paciente paciente) {
@@ -110,6 +111,8 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 
 	public void mountScene(Stage stage) {
 		this.stage = stage;
+		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPacientes());
+
 		stage.setTitle("Atualizar Paciente");
 
 		pane.getChildren().add(ivUserAdd);
@@ -153,8 +156,9 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		pane.getChildren().add(lblUF);
 		pane.getChildren().add(cbUF);
 		pane.getChildren().add(btnSalvar);
+		pane.getChildren().add(botaoVoltar.getButton());
 
-		ivUserAdd.relocate(50, 50);
+		ivUserAdd.relocate(80, 50);
 		ivUserAdd.setFitHeight(100);
 		ivUserAdd.setFitWidth(100);
 		ivUserAdd.setPreserveRatio(true);
@@ -244,20 +248,21 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 
 		btnSalvar.relocate(770, 560);
 		btnSalvar.setMinWidth(80);
+		btnSalvar.setStyle("-fx-background-color: ".concat("#4fddae"));
 		btnSalvar.setOnAction(this);
 
 		stage.setScene(scene);
 		stage.setTitle("Novo Paciente");
 	}
-	
-	public void entityToView(Paciente paciente){
+
+	public void entityToView(Paciente paciente) {
 		tfNome.setText(paciente.getNome());
 		dpDataNasc.setValue(paciente.getDataNasc());
 		cbGenero.setValue(paciente.getGenero());
 		tfCPF.setText(paciente.getCpf());
 		tfRG.setText(paciente.getRg());
 		tfNCart.setText(paciente.getNCarteirinha());
-		if(paciente.getPlano() != null) {
+		if (paciente.getPlano() != null) {
 			cbPlano.setValue(paciente.getPlano());
 			cbConvenio.setValue(paciente.getPlano().getConvenio());
 		}
@@ -272,7 +277,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		tfCidade.setText(paciente.getCidade());
 		cbUF.setValue(paciente.getUf());
 	}
-	
+
 	public void viewToEntity() {
 		paciente.setNome(tfNome.getText());
 		paciente.setDataNasc(dpDataNasc.getValue());
@@ -303,7 +308,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 			getPlanoComboBox();
 		}
 	}
-	
+
 	private void salvar() {
 		if (validFields()) {
 			viewToEntity();
@@ -341,7 +346,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void getPlanoComboBox() {
 		try {
 			if (cbConvenio.getValue() != null) {

@@ -13,27 +13,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Paciente implements IModel {
+public class Medico implements IModel {
 
 	private long id;
 
 	private String nome;
 
-	private LocalDate dataNasc;
-
-	private Genero genero;
-
 	private String cpf;
 
 	private String rg;
 
-	private String nCarteirinha;
+	private LocalDate dataNasc;
+
+	private String crm;
 
 	private String email;
-
-	private String telResid;
-
-	private String telCelular;
 
 	private String logradouro;
 
@@ -48,6 +42,14 @@ public class Paciente implements IModel {
 	private String cidade;
 
 	private Estados uf;
+
+	private String telResid;
+
+	private String telCelular;
+
+	private Genero genero;
+
+	private Especialidade especialidade;
 	
 	@Override
 	public String toString() {

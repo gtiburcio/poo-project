@@ -262,10 +262,6 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		tfCPF.setText(paciente.getCpf());
 		tfRG.setText(paciente.getRg());
 		tfNCart.setText(paciente.getNCarteirinha());
-		if (paciente.getPlano() != null) {
-			cbPlano.setValue(paciente.getPlano());
-			cbConvenio.setValue(paciente.getPlano().getConvenio());
-		}
 		tfEmail.setText(paciente.getEmail());
 		tfTelResid.setText(paciente.getTelResid());
 		tfTelCel.setText(paciente.getTelCelular());
@@ -285,7 +281,6 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		paciente.setCpf(tfCPF.getText());
 		paciente.setRg(tfRG.getText());
 		paciente.setNCarteirinha(tfNCart.getText());
-		paciente.setPlano(cbPlano.getValue());
 		paciente.setEmail(tfEmail.getText());
 		paciente.setTelResid(tfTelResid.getText());
 		paciente.setTelCelular(tfTelCel.getText());

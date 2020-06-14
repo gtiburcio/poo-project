@@ -4,9 +4,11 @@ import static java.util.Objects.isNull;
 
 import application.controller.ConvenioController;
 import application.controller.PacienteController;
+import application.controller.PacientePlanoController;
 import application.controller.PlanoController;
 import application.model.Convenio;
 import application.model.Paciente;
+import application.model.PacientePlano;
 import application.model.Plano;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
@@ -36,6 +38,7 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 	ConvenioController convenioController = new ConvenioController();
 	PlanoController planoController = new PlanoController();
 	PacienteController pacienteController = new PacienteController();
+	PacientePlanoController pacientePlanoController = new PacientePlanoController();
 
 	Label lblNome = new Label("Nome");
 	TextField tfNome = new TextField();
@@ -281,7 +284,7 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 		}
 	}
 
-	public Paciente viewToEntity() {
+	public Paciente viewToEntityPaciente() {
 		Paciente paciente = new Paciente();
 		paciente.setNome(tfNome.getText());
 		paciente.setDataNasc(dpDataNasc.getValue());
@@ -289,7 +292,6 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 		paciente.setCpf(tfCPF.getText());
 		paciente.setRg(tfRG.getText());
 		paciente.setNCarteirinha(tfNCart.getText());
-		paciente.setPlano(cbPlano.getValue());
 		paciente.setEmail(tfEmail.getText());
 		paciente.setTelResid(tfTelResid.getText());
 		paciente.setTelCelular(tfTelCel.getText());
@@ -305,22 +307,38 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 
 	private void salvar() {
 		if (validFields()) {
-			Paciente paciente = viewToEntity();
+			Paciente paciente = viewToEntityPaciente();
+			long idPaciente = 0;
 			try {
-				pacienteController.save(paciente);
+				idPaciente = pacienteController.save(paciente, true);
 				successMessage("Paciente ".concat(paciente.getNome()).concat(" foi salvo com sucesso!"));
 				new TelaPacientes().mountScene(stage);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				errorMessage("Ocorreu um erro ao salvar o usuário, tente novamente mais tarde...");
+				e.printStackTrace();
+				errorMessage("Ocorreu um erro ao salvar o paciente, tente novamente mais tarde...");
+			}
+
+			if (cbPlano.getValue() != null && cbConvenio.getSelectionModel().getSelectedItem().getId() != 0) {
+				PacientePlano pacientePlano = new PacientePlano();
+				pacientePlano.setPaciente(paciente);
+				pacientePlano.getPaciente().setId(idPaciente);
+				pacientePlano.setPlano(cbPlano.getValue());
+				try {
+					pacientePlanoController.save(pacientePlano);
+					new TelaPacientes().mountScene(stage);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
 	private boolean validFields() {
-		if (tfNome.getText().equals("") || tfCPF.getText().equals("")
-				|| (tfTelCel.getText().equals("") && tfTelResid.getText().equals(""))) {
-			errorMessage("Preencha o nome, cpf e algum telefone, por favor!");
+		if (tfNome.getText().equals("") || dpDataNasc.getValue() == null || cbGenero.getValue() == null
+				|| tfCPF.getText().equals("") || (tfTelCel.getText().equals("") && tfTelResid.getText().equals(""))) {
+			errorMessage("Preencha todos os campos, por favor!");
 			return false;
 		}
 		if ((!isNull(cbConvenio.getSelectionModel().getSelectedItem())

@@ -1,6 +1,13 @@
 package application.views.medico;
 
+import application.controller.MedicoController;
+import application.model.Especialidade;
+import application.model.Medico;
+import application.model.enums.Estados;
+import application.model.enums.Genero;
 import application.views.Tela;
+import application.views.principal.TelaPrincipal;
+import application.views.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,17 +21,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class NovoMedico implements Tela, EventHandler<ActionEvent> {
-
+public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
+	private Stage stage;
+	
     private final Scene scene;
 
     private final Pane pane;
+    
+    private final MedicoController medicoController = new MedicoController();
     
     Label lblNome = new Label("Nome");
     TextField tfNome = new TextField();
 
     Label lblEspecial = new Label("Especialidades");
-    ComboBox<Object> cbEspecial = new ComboBox<>();
+    ComboBox<Especialidade> cbEspecial = new ComboBox<>();
+
+    Label lblCRM = new Label("CRM");
+    TextField tfCRM = new TextField();
 
     Label lblDadosPrincipais = new Label("Dados Principais");
 
@@ -37,17 +50,17 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
     Label lblDataNasc = new Label("Data Nascimento");
     DatePicker dpDataNasc = new DatePicker();
 
-    Label lblNCons = new Label("Nº do conselho");
-    TextField tfNCons = new TextField();
+	Label lblEmail = new Label("E-mail");
+	TextField tfEmail = new TextField();
 
-    Label lblSiglaCon = new Label("Sigla do conselho");
-    ComboBox<Object> cbSiglaCons = new ComboBox<>();
+	Label lblTelResid = new Label("Telefone Resid.");
+	TextField tfTelResid = new TextField();
 
-    Label lblUFCons = new Label("UF do conselho");
-    ComboBox<Object> cbUFCons = new ComboBox<>();
+	Label lblTelCel = new Label("Telefone Cel.");
+	TextField tfTelCel = new TextField();
 
     Label lblGenero = new Label("Gênero");
-    ComboBox<Object> cbGenero = new ComboBox<>();
+    ComboBox<Genero> cbGenero = new ComboBox<>();
 
     Label lblEndereco = new Label("Endereço");
 
@@ -67,23 +80,27 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
     TextField tfBairro = new TextField();
 
     Label lblCidade = new Label("Cidade");
-    ComboBox<Object> cbCidade = new ComboBox<>();
+    TextField tfCidade = new TextField();
 
     Label lblUF = new Label("UF");
-    ComboBox<Object> cbUF = new ComboBox<>();
+    ComboBox<Estados> cbUF = new ComboBox<>();
 
     Button btnSalvar = new Button("Salvar");
 
-    Image imgUserAdd = new Image("resources/images/contact.png");
+    Image imgUserAdd = new Image("resources/images/medico.png");
     ImageView ivUserAdd = new ImageView(imgUserAdd);
 
-    public NovoMedico() {
+    public TelaNovoMedico() {
         this.pane = new Pane();
         this.scene = new Scene(pane, 900, 600);
     }
 
     public void mountScene(Stage stage) {
-        stage.setTitle("Novo M�dico");
+		this.stage = stage;
+		
+        stage.setTitle("Novo Médico");
+        
+		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
 
         pane.getChildren().add(ivUserAdd);
 
@@ -91,6 +108,8 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
         pane.getChildren().add(tfNome);
         pane.getChildren().add(lblEspecial);
         pane.getChildren().add(cbEspecial);
+        pane.getChildren().add(lblCRM);
+        pane.getChildren().add(tfCRM);
         pane.getChildren().add(lblDadosPrincipais);
         pane.getChildren().add(lblCPF);
         pane.getChildren().add(tfCPF);
@@ -98,12 +117,12 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
         pane.getChildren().add(tfRG);
         pane.getChildren().add(lblDataNasc);
         pane.getChildren().add(dpDataNasc);
-        pane.getChildren().add(lblNCons);
-        pane.getChildren().add(tfNCons);
-        pane.getChildren().add(lblSiglaCon);
-        pane.getChildren().add(cbSiglaCons);
-        pane.getChildren().add(lblUFCons);
-        pane.getChildren().add(cbUFCons);
+        pane.getChildren().add(lblEmail);
+        pane.getChildren().add(tfEmail);
+        pane.getChildren().add(lblTelResid);
+        pane.getChildren().add(tfTelResid);
+        pane.getChildren().add(lblTelCel);
+        pane.getChildren().add(tfTelCel);
         pane.getChildren().add(lblGenero);
         pane.getChildren().add(cbGenero);
         pane.getChildren().add(lblEndereco);
@@ -118,12 +137,13 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
         pane.getChildren().add(lblBairro);
         pane.getChildren().add(tfBairro);
         pane.getChildren().add(lblCidade);
-        pane.getChildren().add(cbCidade);
+        pane.getChildren().add(tfCidade);
         pane.getChildren().add(lblUF);
         pane.getChildren().add(cbUF);
         pane.getChildren().add(btnSalvar);
+		pane.getChildren().add(botaoVoltar.getButton());
 
-        ivUserAdd.relocate(50, 50);
+        ivUserAdd.relocate(80, 50);
         ivUserAdd.setFitHeight(100);
         ivUserAdd.setFitWidth(100);
         ivUserAdd.setPreserveRatio(true);
@@ -135,6 +155,10 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
         lblEspecial.relocate(550, 90);
         cbEspecial.relocate(650, 90);
         cbEspecial.setMinWidth(200);
+
+        lblCRM.relocate(550, 140);
+        tfCRM.relocate(650, 140);
+        tfCRM.setMinWidth(200);
 
         lblDadosPrincipais.relocate(30, 190);
         lblDadosPrincipais.setStyle("-fx-underline: true; -fx-font-weight: bold;");
@@ -151,21 +175,22 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
         dpDataNasc.relocate(650, 240);
         dpDataNasc.setMinWidth(200);
 
-        lblNCons.relocate(70, 290);
-        tfNCons.relocate(170, 290);
-        tfNCons.setMaxWidth(120);
+        lblEmail.relocate(70, 290);
+        tfEmail.relocate(150, 290);
+        tfEmail.setMaxWidth(100);
 
-        lblSiglaCon.relocate(300, 290);
-        cbSiglaCons.relocate(400, 290);
-        cbSiglaCons.setMinWidth(100);
+        lblTelResid.relocate(280, 290);
+        tfTelResid.relocate(370, 290);
+        tfTelResid.setMaxWidth(100);
 
-        lblUFCons.relocate(520, 290);
-        cbUFCons.relocate(610, 290);
-        cbUFCons.setMaxWidth(90);
+        lblTelCel.relocate(475, 290);
+        tfTelCel.relocate(550, 290);
+        tfTelCel.setMaxWidth(120);
 
         lblGenero.relocate(700, 290);
         cbGenero.relocate(750, 290);
         cbGenero.setMinWidth(100);
+        cbGenero.getItems().addAll(Genero.values());
 
         lblEndereco.relocate(30, 340);
         lblEndereco.setStyle("-fx-underline: true; -fx-font-weight: bold;");
@@ -191,12 +216,13 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
         tfBairro.setMinWidth(200);
 
         lblCidade.relocate(400, 490);
-        cbCidade.relocate(460, 490);
-        cbCidade.setMinWidth(200);
+        tfCidade.relocate(460, 490);
+        tfCidade.setMinWidth(200);
 
-        lblUF.relocate(720, 490);
-        cbUF.relocate(750, 490);
+        lblUF.relocate(700, 490);
+        cbUF.relocate(730, 490);
         cbUF.setMinWidth(70);
+        cbUF.getItems().addAll(Estados.values());
 
         btnSalvar.relocate(770, 560);
         btnSalvar.setMinWidth(80);
@@ -208,7 +234,52 @@ public class NovoMedico implements Tela, EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		if(event.getTarget().equals(btnSalvar)) {
-			
+			salvar();
 		}
+	}
+
+	private void salvar() {
+		if (validFields()) {
+			Medico medico = viewToEntity();
+			try {
+				medicoController.save(medico);
+				successMessage("Medico ".concat(medico.getNome()).concat(" foi salvo com sucesso!"));
+				//new TelaMedicos().mountScene(stage);
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMessage("Ocorreu um erro ao salvar o médico, tente novamente mais tarde...");
+			}
+		}
+	}
+
+	private Medico viewToEntity() {
+		Medico medico = new Medico();
+		medico.setNome(tfNome.getText());
+//		medico.setEspecialidade(cbEspecial.getValue());
+		medico.setCrm(tfCRM.getText());
+		medico.setCpf(tfCPF.getText());
+		medico.setRg(tfRG.getText());
+		medico.setDataNasc(dpDataNasc.getValue());
+		medico.setEmail(tfEmail.getText());
+		medico.setTelResid(tfTelResid.getText());
+		medico.setTelCelular(tfTelCel.getText());
+		medico.setGenero(cbGenero.getValue());
+		medico.setLogradouro(tfLogradouro.getText());
+		medico.setCep(tfCEP.getText());
+		medico.setComplemento(tfComplemento.getText());
+		medico.setNumero(tfNumero.getText());
+		medico.setBairro(tfBairro.getText());
+		medico.setCidade(tfCidade.getText());
+		medico.setUf(cbUF.getValue());
+		return medico;
+	}
+
+	private boolean validFields() {
+		if (tfNome.getText().equals("") || tfCPF.getText().equals("")
+				|| (tfTelCel.getText().equals("") && tfTelResid.getText().equals(""))) {
+			errorMessage("Preencha o nome, cpf e algum telefone, por favor!");
+			return false;
+		}
+		return true;
 	}
 }

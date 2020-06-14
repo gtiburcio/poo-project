@@ -52,7 +52,7 @@ public class TelaLogin implements Tela {
 
         Button buttonLogin = new Button("Entrar");
         buttonLogin.relocate(390, 550);
-        buttonLogin.setStyle("-fx-background-color: ".concat("#4fddae"));
+        buttonLogin.setStyle("-fx-background-color: #4fddae; -fx-border-radius: 50px");
         buttonLogin.setMinWidth(200);
         buttonLogin.setMinHeight(30);
         buttonLogin.setOnMouseClicked(event -> fazerLogin());

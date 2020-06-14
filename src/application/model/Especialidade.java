@@ -16,5 +16,9 @@ public class Especialidade implements IModel {
     private String nome;
 
     private String descricao;
-    
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

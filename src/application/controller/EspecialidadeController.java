@@ -20,5 +20,4 @@ public class EspecialidadeController {
 	public Especialidade findByNome(String nome) throws Exception {
 		return new EspecialidadeDAO().findByNome(nome);
 	}
-
 }

@@ -23,7 +23,7 @@ public class MedicoController {
 	public List<Medico> findAll() throws Exception {
 		return new MedicoDAO().findAll().stream().map(model -> (Medico) model).peek(medico -> {
 			try {
-				//medico.setEspecialidade(new EspecialidadeController().findById(medico.getEspecialidade().getId()));
+				medico.setEspecialidade(new EspecialidadeController().findById(medico.getEspecialidade().getId()));
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}

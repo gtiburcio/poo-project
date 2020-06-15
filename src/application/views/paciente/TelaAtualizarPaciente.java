@@ -4,9 +4,11 @@ import static java.util.Objects.isNull;
 
 import application.controller.ConvenioController;
 import application.controller.PacienteController;
+import application.controller.PacientePlanoController;
 import application.controller.PlanoController;
 import application.model.Convenio;
 import application.model.Paciente;
+import application.model.PacientePlano;
 import application.model.Plano;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
@@ -34,10 +36,13 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 	private final Pane pane;
 
 	private Paciente paciente;
-
+	
+	private PacientePlano pacientePlano;
+	
 	ConvenioController convenioController = new ConvenioController();
-	PlanoController planoController = new PlanoController();
 	PacienteController pacienteController = new PacienteController();
+	PlanoController planoController = new PlanoController();
+	PacientePlanoController pacientePlanoController = new PacientePlanoController();
 
 	Label lblNome = new Label("Nome");
 	TextField tfNome = new TextField();
@@ -104,6 +109,11 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 
 	public TelaAtualizarPaciente(Paciente paciente) {
 		this.paciente = paciente;
+		try {
+			this.pacientePlano = new PacientePlanoController().findByPaciente(paciente.getId());
+		} catch (Exception e) {
+			this.pacientePlano = new PacientePlano();
+		}
 		entityToView(paciente);
 		this.pane = new Pane();
 		this.scene = new Scene(pane, 900, 600);
@@ -272,6 +282,12 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		tfBairro.setText(paciente.getBairro());
 		tfCidade.setText(paciente.getCidade());
 		cbUF.setValue(paciente.getUf());
+		try {
+			cbPlano.setValue(pacientePlano.getPlano());
+			cbConvenio.setValue(pacientePlano.getPlano().getConvenio());
+		} catch (Exception e) {			
+
+		}
 	}
 
 	public void viewToEntity() {
@@ -313,7 +329,29 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 				new TelaPacientes().mountScene(stage);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				errorMessage("Ocorreu um erro ao salvar o usuário, tente novamente mais tarde...");
+				errorMessage("Ocorreu um erro ao salvar o paciente, tente novamente mais tarde...");
+			}
+
+			if (cbPlano.getValue() != null && cbConvenio.getSelectionModel().getSelectedItem().getId() != 0) {
+				pacientePlano.setPaciente(paciente);
+				pacientePlano.setPlano(cbPlano.getValue());
+				try {
+					pacientePlanoController.update(pacientePlano);
+				} catch (Exception e) {
+					try {
+						pacientePlanoController.save(pacientePlano);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				} finally {
+					new TelaPacientes().mountScene(stage);
+				}
+			}else {
+				try {
+					pacientePlanoController.delete(pacientePlano);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

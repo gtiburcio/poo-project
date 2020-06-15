@@ -1,6 +1,8 @@
 package application.views.medico;
 
+import application.controller.EspecialidadeController;
 import application.controller.MedicoController;
+import application.model.Convenio;
 import application.model.Especialidade;
 import application.model.Medico;
 import application.model.enums.Estados;
@@ -29,6 +31,8 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
     private final Pane pane;
     
     private final MedicoController medicoController = new MedicoController();
+    
+    private final EspecialidadeController especialidadeController = new EspecialidadeController();
     
     Label lblNome = new Label("Nome");
     TextField tfNome = new TextField();
@@ -154,6 +158,7 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 
         lblEspecial.relocate(550, 90);
         cbEspecial.relocate(650, 90);
+        getEspecialidadeComboBox();
         cbEspecial.setMinWidth(200);
 
         lblCRM.relocate(550, 140);
@@ -255,7 +260,7 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 	private Medico viewToEntity() {
 		Medico medico = new Medico();
 		medico.setNome(tfNome.getText());
-//		medico.setEspecialidade(cbEspecial.getValue());
+		medico.setEspecialidade(cbEspecial.getValue());
 		medico.setCrm(tfCRM.getText());
 		medico.setCpf(tfCPF.getText());
 		medico.setRg(tfRG.getText());
@@ -281,5 +286,13 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 			return false;
 		}
 		return true;
+	}
+	
+	private void getEspecialidadeComboBox() {
+		try {
+			cbEspecial.getItems().addAll(especialidadeController.findAll());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

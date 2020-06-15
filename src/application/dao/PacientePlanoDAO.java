@@ -64,7 +64,7 @@ public class PacientePlanoDAO implements IDAO {
 
 	@Override
 	public IModel findById(long id) throws Exception {
-		String sql = "select * from paciente where id_paciente_plano = ?";
+		String sql = "select * from paciente_plano where id_paciente_plano = ?";
 		PreparedStatement pstm = connection.prepareStatement(sql);
 		pstm.setLong(1, id);
 		ResultSet rs = pstm.executeQuery();
@@ -77,7 +77,7 @@ public class PacientePlanoDAO implements IDAO {
 	}
 
 	public IModel findByPaciente(long id) throws Exception {
-		String sql = "select * from paciente where id_paciente = ?";
+		String sql = "select * from paciente_plano where id_paciente = ?";
 		PreparedStatement pstm = connection.prepareStatement(sql);
 		pstm.setLong(1, id);
 		ResultSet rs = pstm.executeQuery();

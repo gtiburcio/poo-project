@@ -337,7 +337,10 @@ public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 
 	private boolean validFields() {
 		if (tfNome.getText().equals("") || dpDataNasc.getValue() == null || cbGenero.getValue() == null
-				|| tfCPF.getText().equals("") || (tfTelCel.getText().equals("") && tfTelResid.getText().equals(""))) {
+				|| tfCPF.getText().equals("") || tfRG.getText().equals("") || tfNCart.getText().equals("")
+				|| tfEmail.getText().equals("") || tfTelCel.getText().equals("") || tfTelResid.getText().equals("")
+				|| tfLogradouro.getText().equals("") || tfCEP.getText().equals("") || tfNumero.getText().equals("")
+				|| tfBairro.getText().equals("") || tfCidade.getText().equals("") || cbUF.getValue() == null) {
 			errorMessage("Preencha todos os campos, por favor!");
 			return false;
 		}

@@ -36,9 +36,9 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 	private final Pane pane;
 
 	private Paciente paciente;
-	
+
 	private PacientePlano pacientePlano;
-	
+
 	ConvenioController convenioController = new ConvenioController();
 	PacienteController pacienteController = new PacienteController();
 	PlanoController planoController = new PlanoController();
@@ -285,7 +285,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 		try {
 			cbPlano.setValue(pacientePlano.getPlano());
 			cbConvenio.setValue(pacientePlano.getPlano().getConvenio());
-		} catch (Exception e) {			
+		} catch (Exception e) {
 
 		}
 	}
@@ -346,7 +346,7 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 				} finally {
 					new TelaPacientes().mountScene(stage);
 				}
-			}else {
+			} else {
 				try {
 					pacientePlanoController.delete(pacientePlano);
 				} catch (Exception e) {
@@ -357,8 +357,11 @@ public class TelaAtualizarPaciente implements Tela, EventHandler<ActionEvent> {
 	}
 
 	private boolean validFields() {
-		if (tfNome.getText().equals("") || tfCPF.getText().equals("")
-				|| (tfTelCel.getText().equals("") && tfTelResid.getText().equals(""))) {
+		if (tfNome.getText().equals("") || dpDataNasc.getValue() == null || cbGenero.getValue() == null
+				|| tfCPF.getText().equals("") || tfRG.getText().equals("") || tfNCart.getText().equals("")
+				|| tfEmail.getText().equals("") || tfTelCel.getText().equals("") || tfTelResid.getText().equals("")
+				|| tfLogradouro.getText().equals("") || tfCEP.getText().equals("") || tfNumero.getText().equals("")
+				|| tfBairro.getText().equals("") || tfCidade.getText().equals("") || cbUF.getValue() == null) {
 			errorMessage("Preencha o nome, cpf e algum telefone, por favor!");
 			return false;
 		}

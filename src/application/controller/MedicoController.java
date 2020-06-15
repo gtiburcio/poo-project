@@ -31,10 +31,18 @@ public class MedicoController {
 	}
 
 	public Medico findById(long id) throws Exception {
-		return (Medico) new MedicoDAO().findById(id);
+		Medico medico = (Medico) new MedicoDAO().findById(id);
+		medico.setEspecialidade(new EspecialidadeController().findById(medico.getEspecialidade().getId()));
+		return medico;
 	}
 
-	public Medico findByEspecialidade(long id_especialidade) throws Exception {
-		return (Medico) new MedicoDAO().findByEspecialidade(id_especialidade);
+	public List<Medico> findByEspecialidade(long id_especialidade) throws Exception {
+		return new MedicoDAO().findByEspecialidade(id_especialidade).stream().map(model -> (Medico) model).peek(medico -> {
+			try {
+				medico.setEspecialidade(new EspecialidadeController().findById(medico.getEspecialidade().getId()));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}).collect(Collectors.toList());
 	}
 }

@@ -95,6 +95,7 @@ public class TelaNovoAgendamento implements Tela {
         comboEspecialidade.setItems(getEspecialidades());
         comboEspecialidade.relocate(840, 220);
         comboEspecialidade.setMinWidth(250);
+        disableEspecialidadeCombo(false);
         comboEspecialidade.setOnAction(action -> findMedicos());
 
         pane.getChildren().addAll(titulo, agendaView, labelCpf, cpfPaciente,

@@ -9,17 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Especialidade implements IModel {
-
-    private long id;
-
-    private String nome;
-
-    private String descricao;
-
-	@Override
-	public String toString() {
-		return nome;
-	}
+public class PacientePlano implements IModel {
+	
+	private long id;
+	
+	private Paciente paciente;
+	
+	private Plano plano;
 }
-

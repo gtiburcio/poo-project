@@ -1,6 +1,6 @@
 package application;
 
-import application.views.login.TelaLogin;
+import application.views.agendamento.TelaNovoAgendamento;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,7 +12,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        new TelaLogin().mountScene(stage);
+        new TelaNovoAgendamento().mountScene(stage);
         stage.setResizable(false);
         stage.show();
     }

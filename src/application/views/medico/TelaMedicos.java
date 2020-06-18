@@ -1,11 +1,7 @@
 package application.views.medico;
 
-import java.util.Objects;
-
 import application.controller.MedicoController;
-import application.controller.PacienteController;
 import application.model.Medico;
-import application.model.Paciente;
 import application.views.Tela;
 import application.views.principal.TelaPrincipal;
 import application.views.util.BotaoVoltar;
@@ -22,6 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class TelaMedicos implements Tela {
 

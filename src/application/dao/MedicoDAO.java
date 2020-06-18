@@ -1,16 +1,16 @@
 package application.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
 import application.model.Especialidade;
 import application.model.IModel;
 import application.model.Medico;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedicoDAO implements IDAO {
 

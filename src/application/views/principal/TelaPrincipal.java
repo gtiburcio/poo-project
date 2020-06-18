@@ -1,7 +1,8 @@
 package application.views.principal;
 
 import application.views.Tela;
-import application.views.especialidade.TelaEspecialidades;
+import application.views.agendamento.TelaNovoAgendamento;
+import application.views.especialidade.TelaNovaEspecialidade;
 import application.views.medico.TelaMedicos;
 import application.views.paciente.TelaPacientes;
 import application.views.usuario.TelaUsuarios;
@@ -74,7 +75,7 @@ public class TelaPrincipal implements Tela {
 
         labelEspecialidade.setOnMouseEntered(event -> labelEspecialidade.setStyle(menuBorder));
         labelEspecialidade.setOnMouseExited(event -> labelEspecialidade.setStyle(null));
-        labelEspecialidade.setOnMouseExited(event -> new TelaEspecialidades().mountScene(stage));
+        labelEspecialidade.setOnMouseClicked(event -> new TelaNovaEspecialidade().mountScene(stage));
 
 
         Image agendaImage = new Image("resources/images/agenda.png");
@@ -89,6 +90,7 @@ public class TelaPrincipal implements Tela {
 
         labelAgenda.setOnMouseEntered(event -> labelAgenda.setStyle(menuBorder));
         labelAgenda.setOnMouseExited(event -> labelAgenda.setStyle(null));
+        labelAgenda.setOnMouseClicked(event -> new TelaNovoAgendamento().mountScene(stage));
 
         Image pagamentoImage = new Image("resources/images/pagamento.png");
         ImageView pagamentoView = new ImageView(pagamentoImage);

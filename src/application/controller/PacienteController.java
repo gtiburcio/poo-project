@@ -1,10 +1,10 @@
 package application.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import application.dao.PacienteDAO;
 import application.model.Paciente;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PacienteController {
 
@@ -35,5 +35,9 @@ public class PacienteController {
 
 	public Paciente findById(long id) throws Exception {
 		return (Paciente) new PacienteDAO().findById(id);
+	}
+
+	public Paciente findByCpf(String cpf) throws Exception {
+		return (Paciente) new PacienteDAO().findByCpf(cpf);
 	}
 }

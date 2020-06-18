@@ -1,17 +1,16 @@
 package application.dao;
 
+import application.model.IModel;
+import application.model.Paciente;
+import application.model.enums.Estados;
+import application.model.enums.Genero;
+import com.mysql.jdbc.Statement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.jdbc.Statement;
-
-import application.model.IModel;
-import application.model.Paciente;
-import application.model.enums.Estados;
-import application.model.enums.Genero;
 
 public class PacienteDAO implements IDAO {
 
@@ -130,6 +129,22 @@ public class PacienteDAO implements IDAO {
 		String sql = "select * from paciente where id_paciente = ?";
 		PreparedStatement pstm = connection.prepareStatement(sql);
 		pstm.setLong(1, id);
+		ResultSet rs = pstm.executeQuery();
+		if (rs.next()) {
+			return new Paciente(rs.getLong("id_paciente"), rs.getString("nome"), rs.getDate("dataNasc").toLocalDate(),
+					Genero.valueOf(rs.getString("genero")), rs.getString("cpf"), rs.getString("rg"),
+					rs.getString("nCarteirinha"), rs.getString("email"), rs.getString("telResid"),
+					rs.getString("telCelular"), rs.getString("logradouro"), rs.getString("cep"),
+					rs.getString("complemento"), rs.getString("numero"), rs.getString("bairro"), rs.getString("cidade"),
+					Estados.valueOf(rs.getString("uf")));
+		}
+		return null;
+	}
+
+	public IModel findByCpf(String cpf) throws Exception {
+		String sql = "select * from paciente where cpf = ?";
+		PreparedStatement pstm = connection.prepareStatement(sql);
+		pstm.setString(1, cpf);
 		ResultSet rs = pstm.executeQuery();
 		if (rs.next()) {
 			return new Paciente(rs.getLong("id_paciente"), rs.getString("nome"), rs.getDate("dataNasc").toLocalDate(),

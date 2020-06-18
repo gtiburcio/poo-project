@@ -1,13 +1,13 @@
 package application.model;
 
-import java.time.LocalDate;
-
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @Builder

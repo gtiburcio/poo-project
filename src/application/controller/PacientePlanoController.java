@@ -1,10 +1,10 @@
 package application.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import application.dao.PacientePlanoDAO;
 import application.model.PacientePlano;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PacientePlanoController {
 

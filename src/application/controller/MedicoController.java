@@ -1,10 +1,10 @@
 package application.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import application.dao.MedicoDAO;
 import application.model.Medico;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MedicoController {
 

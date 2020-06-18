@@ -1,7 +1,5 @@
 package application.views.especialidade;
 
-import java.util.Objects;
-
 import application.controller.EspecialidadeController;
 import application.model.Especialidade;
 import application.views.Tela;
@@ -20,6 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class TelaEspecialidades implements Tela {
 

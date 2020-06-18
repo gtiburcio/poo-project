@@ -1,15 +1,15 @@
 package application.dao;
 
+import application.model.IModel;
+import application.model.Paciente;
+import application.model.PacientePlano;
+import application.model.Plano;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import application.model.IModel;
-import application.model.Paciente;
-import application.model.PacientePlano;
-import application.model.Plano;
 
 public class PacientePlanoDAO implements IDAO {
 

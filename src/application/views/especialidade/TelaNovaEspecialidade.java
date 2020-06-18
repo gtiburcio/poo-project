@@ -1,6 +1,8 @@
 package application.views.especialidade;
 
 import application.views.Tela;
+import application.views.principal.TelaPrincipal;
+import application.views.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -21,12 +23,12 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
     Label lblNome = new Label("Nome");
     TextField tfNome = new TextField();
     
-    Label lblDescricao = new Label("Descricao");
+    Label lblDescricao = new Label("Descrição");
     TextField tfDescricao = new TextField();
 
     Button btnSalvar = new Button("Salvar");
 
-    Image imgUserAdd = new Image("resources/images/contact.png");
+    Image imgUserAdd = new Image("resources/images/especialidade.png");
     ImageView ivUserAdd = new ImageView(imgUserAdd);
 
     public TelaNovaEspecialidade() {
@@ -35,30 +37,31 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
     }
 
     public void mountScene(Stage stage) {
-        stage.setTitle("Novo Especialidade");
+        stage.setTitle("Nova Especialidade");
+        
+        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
 
         pane.getChildren().add(ivUserAdd);
-
         pane.getChildren().add(lblNome);
         pane.getChildren().add(tfNome);
-        
         pane.getChildren().add(lblDescricao);
         pane.getChildren().add(tfDescricao);
-       
         pane.getChildren().add(btnSalvar);
+        pane.getChildren().add(botaoVoltar.getButton());
 
-        ivUserAdd.relocate(50, 50);
+        ivUserAdd.relocate(80, 50);
         ivUserAdd.setFitHeight(100);
         ivUserAdd.setFitWidth(100);
         ivUserAdd.setPreserveRatio(true);
 
         lblNome.relocate(250, 90);
-        tfNome.relocate(300, 90);
+        tfNome.relocate(320, 90);
         tfNome.setMinWidth(200);
         
-        lblDescricao.relocate(250, 120);
-        tfDescricao.relocate(300, 90);
-        tfDescricao.setMinWidth(200);
+        lblDescricao.relocate(250, 140);
+        tfDescricao.relocate(320, 140);
+        tfDescricao.setMinWidth(350);
+        tfDescricao.setMinHeight(100);
  
         btnSalvar.relocate(770, 560);
         btnSalvar.setMinWidth(80);

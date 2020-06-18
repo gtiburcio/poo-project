@@ -1,11 +1,10 @@
 package application.controller;
 
+import application.dao.PacienteDAO;
+import application.model.Paciente;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import application.dao.PacienteDAO;
-import application.model.IModel;
-import application.model.Paciente;
 
 public class PacienteController {
 

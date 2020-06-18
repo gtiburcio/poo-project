@@ -1,10 +1,10 @@
 package application.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import application.dao.EspecialidadeDAO;
 import application.model.Especialidade;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EspecialidadeController {
 
@@ -20,4 +20,13 @@ public class EspecialidadeController {
 	public Especialidade findByNome(String nome) throws Exception {
 		return new EspecialidadeDAO().findByNome(nome);
 	}
+
+	public void delete(Especialidade especialidade) throws Exception {
+		new EspecialidadeDAO().delete(especialidade);
+	}
+
+	public void update(Especialidade especialidade) throws Exception {
+		new EspecialidadeDAO().update(especialidade);
+	}
+
 }

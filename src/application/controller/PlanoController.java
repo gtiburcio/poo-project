@@ -1,10 +1,8 @@
 package application.controller;
 
 import application.dao.PlanoDAO;
-import application.dao.UsuarioDAO;
 import application.model.Convenio;
 import application.model.Plano;
-import application.model.Usuario;
 
 import java.util.List;
 import java.util.stream.Collectors;

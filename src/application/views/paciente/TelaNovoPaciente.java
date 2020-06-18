@@ -1,7 +1,5 @@
 package application.views.paciente;
 
-import static java.util.Objects.isNull;
-
 import application.controller.ConvenioController;
 import application.controller.PacienteController;
 import application.controller.PacientePlanoController;
@@ -26,6 +24,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import static java.util.Objects.isNull;
 
 public class TelaNovoPaciente implements Tela, EventHandler<ActionEvent> {
 

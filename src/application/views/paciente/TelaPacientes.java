@@ -1,7 +1,5 @@
 package application.views.paciente;
 
-import java.util.Objects;
-
 import application.controller.PacienteController;
 import application.model.Paciente;
 import application.views.Tela;
@@ -20,6 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class TelaPacientes implements Tela {
 

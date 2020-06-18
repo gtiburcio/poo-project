@@ -1,8 +1,8 @@
 package application.dao;
 
-import java.util.List;
-
 import application.model.IModel;
+
+import java.util.List;
 
 public interface IDAO {
 

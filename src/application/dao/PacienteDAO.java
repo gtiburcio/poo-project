@@ -1,17 +1,16 @@
 package application.dao;
 
+import application.model.IModel;
+import application.model.Paciente;
+import application.model.enums.Estados;
+import application.model.enums.Genero;
+import com.mysql.jdbc.Statement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.jdbc.Statement;
-
-import application.model.IModel;
-import application.model.Paciente;
-import application.model.enums.Estados;
-import application.model.enums.Genero;
 
 public class PacienteDAO implements IDAO {
 

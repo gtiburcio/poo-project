@@ -20,5 +20,13 @@ public class EspecialidadeController {
 	public Especialidade findByNome(String nome) throws Exception {
 		return new EspecialidadeDAO().findByNome(nome);
 	}
+	
+	public void delete(Especialidade especialidade) throws Exception {
+		new EspecialidadeDAO().delete(especialidade);
+	}
+	
+	public void update(Especialidade especialidade) throws Exception {
+		new EspecialidadeDAO().update(especialidade);
+	}
 
 }

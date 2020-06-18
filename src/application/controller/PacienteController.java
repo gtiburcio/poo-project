@@ -10,7 +10,16 @@ import application.model.Paciente;
 public class PacienteController {
 
 	public void save(Paciente paciente) throws Exception {
-		new PacienteDAO().save(paciente);
+		new PacienteDAO().saveAndGetId(paciente);
+	}
+
+	public long save(Paciente paciente, boolean withId) throws Exception {
+		if(withId) {
+			return new PacienteDAO().saveAndGetId(paciente);
+		}else {
+			new PacienteDAO().save(paciente);
+			return 0;
+		}
 	}
 
 	public void delete(Paciente paciente) throws Exception {
@@ -22,14 +31,7 @@ public class PacienteController {
 	}
 
 	public List<Paciente> findAll() throws Exception {
-		return new PacienteDAO().findAll().stream().map(model -> (Paciente) model).peek(paciente -> {
-			try {
-				paciente.setPlano(new PlanoController().findById(paciente.getPlano().getId()));
-				paciente.getPlano().setConvenio(new ConvenioController().findById(paciente.getPlano().getConvenio().getId()));
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
-		}).collect(Collectors.toList());
+		return new PacienteDAO().findAll().stream().map(model -> (Paciente) model).collect(Collectors.toList());
 	}
 
 	public Paciente findById(long id) throws Exception {

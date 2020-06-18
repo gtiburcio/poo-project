@@ -1,7 +1,6 @@
 package application;
 
 import application.views.agendamento.TelaNovoAgendamento;
-import application.views.login.TelaLogin;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

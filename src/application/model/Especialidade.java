@@ -22,3 +22,4 @@ public class Especialidade implements IModel {
         return nome;
     }
 }
+

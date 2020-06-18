@@ -3,7 +3,7 @@ package application.views.principal;
 import application.views.Tela;
 import application.views.agendamento.TelaNovoAgendamento;
 import application.views.especialidade.TelaNovaEspecialidade;
-import application.views.medico.NovoMedico;
+import application.views.medico.TelaMedicos;
 import application.views.paciente.TelaPacientes;
 import application.views.usuario.TelaUsuarios;
 import javafx.scene.Scene;
@@ -60,7 +60,7 @@ public class TelaPrincipal implements Tela {
 
         labelMedico.setOnMouseEntered(event -> labelMedico.setStyle(menuBorder));
         labelMedico.setOnMouseExited(event -> labelMedico.setStyle(null));
-        labelMedico.setOnMouseClicked(event -> new NovoMedico().mountScene(stage));
+        labelMedico.setOnMouseClicked(event -> new TelaMedicos().mountScene(stage));
 
 
         Image especialidadeImage = new Image("resources/images/especialidade.png");

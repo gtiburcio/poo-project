@@ -3,7 +3,7 @@ create table medico(
     nome varchar(255) not null,
     cpf varchar(11) not null unique,
     rg varchar(9) not null,
-    data_nascimento date,
+    dataNasc date,
     crm varchar(50) not null,
     email varchar(150) not null,
     logradouro varchar(255) not null,

@@ -149,7 +149,7 @@ public class TelaEspecialidades implements Tela {
 				loadEspecialidade();
 			}
 		} catch (Exception ex) {
-			errorMessage("Ocorreu um erro ao deletar o paciente, tente mais tarde...");
+			errorMessage("Ocorreu um erro ao deletar a especialidade, tente mais tarde...");
 		}
 	}
 }

@@ -1,7 +1,8 @@
 package application.views.especialidade;
 
+import application.controller.EspecialidadeController;
+import application.model.Especialidade;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
 import application.views.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,9 +17,13 @@ import javafx.stage.Stage;
 
 public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
 	
+	private Stage stage;
+	
 	private final Scene scene;
 
     private final Pane pane;
+    
+    EspecialidadeController especialidadeController = new EspecialidadeController();
     
     Label lblNome = new Label("Nome");
     TextField tfNome = new TextField();
@@ -37,10 +42,11 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
     }
 
     public void mountScene(Stage stage) {
+    	this.stage = stage;
+    	BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaEspecialidades());
+    	
         stage.setTitle("Nova Especialidade");
         
-        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
-
         pane.getChildren().add(ivUserAdd);
         pane.getChildren().add(lblNome);
         pane.getChildren().add(tfNome);
@@ -64,16 +70,50 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
         tfDescricao.setMinHeight(100);
  
         btnSalvar.relocate(770, 560);
-        btnSalvar.setMinWidth(80);
-        btnSalvar.setOnAction(this);
+		btnSalvar.setMinWidth(80);
+		btnSalvar.setStyle("-fx-background-color: ".concat("#4fddae"));
+		btnSalvar.setOnAction(this);
 
         stage.setScene(scene);
+        stage.setTitle("Nova Especialidade");
     }
 
 	@Override
 	public void handle(ActionEvent event) {
 		if(event.getTarget().equals(btnSalvar)) {
-			
+			salvar();
 		}
 	}
+	
+	public Especialidade viewToEntityEspecialidade() {
+		Especialidade especialidade = new Especialidade();
+		especialidade.setNome(tfNome.getText());
+		especialidade.setDescricao(tfDescricao.getText());
+		return especialidade;
+	}
+
+	private void salvar() {
+		if (validFields()) {
+			Especialidade especialidade = viewToEntityEspecialidade();
+			try {
+				especialidadeController.save(especialidade);
+				successMessage("Especialidade ".concat(especialidade.getNome()).concat(" foi salvo com sucesso!"));
+				new TelaEspecialidades().mountScene(stage);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				errorMessage("Ocorreu um erro ao salvar a especialidade, tente novamente mais tarde...");
+			}
+
+		}
+	}
+
+	private boolean validFields() {
+		if (tfNome.getText().equals("") || tfNome.getText() == null) {
+			errorMessage("Preencha o nome, por favor!");
+			return false;
+		}
+		return true;
+	}
+	
 }

@@ -1,13 +1,15 @@
 package application.dao;
 
-import application.model.Especialidade;
-import application.model.IModel;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mysql.jdbc.Statement;
+
+import application.model.Especialidade;
+import application.model.IModel;
 
 public class EspecialidadeDAO implements IDAO {
 
@@ -26,6 +28,21 @@ public class EspecialidadeDAO implements IDAO {
         pstm.setString(2, especialidade.getDescricao());
         pstm.execute();
     }
+    
+	public long saveAndGetId(IModel obj) throws Exception {
+		Especialidade especialidade = (Especialidade) obj;
+		String sql = "insert into especialidade(nome, descricao) values (?, ?)";
+		PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		pstm.setString(1, especialidade.getNome());
+		pstm.setString(2, especialidade.getDescricao());
+		pstm.execute();
+		ResultSet rs = pstm.getGeneratedKeys();
+		long lastInsertedId = 0;
+		if (rs.next()) {
+			lastInsertedId = rs.getLong(1);
+		}
+		return lastInsertedId;
+	}
 
     @Override
     public void delete(IModel obj) throws Exception {

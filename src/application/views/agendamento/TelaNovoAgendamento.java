@@ -29,7 +29,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static application.model.Agendamento.builder;
 import static application.views.util.MaskUtils.cpfMask;
 import static application.views.util.MaskUtils.removeAllMasks;
 import static java.util.Objects.nonNull;
@@ -178,7 +177,7 @@ public class TelaNovoAgendamento implements Tela {
         LocalDate data = dpAgendamento.getValue();
         LocalTime horario = comboHorarios.getSelectionModel().getSelectedItem();
         if (validarAgendamento(medico, data, horario)) {
-            Agendamento agendamento = builder()
+            Agendamento agendamento = Agendamento.builder()
                     .data(data)
                     .hora(horario)
                     .medico(medico)

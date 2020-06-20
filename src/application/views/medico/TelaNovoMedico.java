@@ -7,7 +7,7 @@ import application.model.Medico;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
+import application.views.principal.TelaPrincipalMedico;
 import application.views.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -103,7 +103,7 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 
 		stage.setTitle("Novo Médico");
 
-		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
+		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipalMedico());
 
 		pane.getChildren().add(ivUserAdd);
 

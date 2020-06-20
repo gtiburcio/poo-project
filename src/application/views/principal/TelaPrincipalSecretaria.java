@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class TelaPrincipal implements Tela {
+public class TelaPrincipalSecretaria implements Tela {
 
     private final Pane pane;
 
@@ -22,7 +22,7 @@ public class TelaPrincipal implements Tela {
 
     private final String menuBorder = "-fx-border-color: grey; -fx-border-radius: 7; -fx-cursor: hand;";
 
-    public TelaPrincipal() {
+    public TelaPrincipalSecretaria() {
         this.pane = new Pane();
         this.scene = new Scene(pane, 1200, 700);
     }

@@ -42,4 +42,27 @@ public class UsuarioController {
     public boolean isDuplicateLogin(String login) throws Exception {
         return new UsuarioDAO().isDuplicateLogin(login);
     }
+
+    private Usuario findByLogin(String login) throws Exception {
+    	try {
+    		Usuario usuario = (Usuario) new UsuarioDAO().findByLogin(login);
+            usuario.setPerfil(new PerfilController().findById(usuario.getPerfil().getId()));
+            return usuario;
+		} catch (Exception e) {
+			return null;
+		}
+        
+    }
+
+    public long authenticate(String login, String senha) throws Exception {
+        Usuario usuario = findByLogin(login);
+        if (usuario == null) {
+        	return 0;
+        }
+        if (!usuario.getSenha().equals(senha)) {
+        	return 0;
+        }
+        return usuario.getPerfil().getId();
+    }
+
 }

@@ -9,7 +9,7 @@ import application.model.Especialidade;
 import application.model.Medico;
 import application.model.Paciente;
 import application.views.Tela;
-import application.views.principal.TelaPrincipalMedico;
+import application.views.principal.TelaPrincipal;
 import application.views.util.BotaoVoltar;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -154,7 +154,7 @@ public class TelaNovoAgendamento implements Tela {
         buttonSalvar.setMinHeight(30);
         buttonSalvar.setOnMouseClicked(event -> salvar());
 
-        BotaoVoltar voltar = new BotaoVoltar(stage, new TelaPrincipalMedico());
+        BotaoVoltar voltar = new BotaoVoltar(stage, new TelaPrincipal());
 
         pane.getChildren().addAll(titulo, agendaView, labelCpf, cpfPaciente, nomeLabel,
                 labelEspecialidade, comboEspecialidade,
@@ -186,7 +186,7 @@ public class TelaNovoAgendamento implements Tela {
             try {
                 agendamentoController.salvar(agendamento);
                 successMessage("Agendamento realizado com sucesso!");
-                new TelaPrincipalMedico().mountScene(this.stage);
+                new TelaPrincipal().mountScene(this.stage);
             } catch (SQLException throwables) {
                 errorMessage("Ocorreu um erro ao tentar realizar o agendamento, tente novamente mais tarde...");
             }

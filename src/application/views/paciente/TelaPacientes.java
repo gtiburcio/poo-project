@@ -3,7 +3,7 @@ package application.views.paciente;
 import application.controller.PacienteController;
 import application.model.Paciente;
 import application.views.Tela;
-import application.views.principal.TelaPrincipalMedico;
+import application.views.principal.TelaPrincipal;
 import application.views.util.BotaoVoltar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,7 +52,7 @@ public class TelaPacientes implements Tela {
 		this.stage = stage;
 
 		Label titulo = new Label("Pacientes");
-		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipalMedico());
+		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
 
 		titulo.setFont(new Font("Arial", 40));
 		titulo.relocate(500, 50);

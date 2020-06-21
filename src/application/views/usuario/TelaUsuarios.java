@@ -3,7 +3,7 @@ package application.views.usuario;
 import application.controller.UsuarioController;
 import application.model.Usuario;
 import application.views.Tela;
-import application.views.principal.TelaPrincipalMedico;
+import application.views.principal.TelaPrincipal;
 import application.views.util.BotaoVoltar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -109,7 +109,7 @@ public class TelaUsuarios implements Tela {
         buttonExcluir.setMinHeight(30);
         buttonExcluir.setOnMouseClicked(event -> excluir());
 
-        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipalMedico());
+        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
 
         pane.getChildren().addAll(titulo, botaoVoltar.getButton(), usuarioView, table);
         pane.getChildren().addAll(buttonCadastrar, buttonAtualizar, buttonExcluir);

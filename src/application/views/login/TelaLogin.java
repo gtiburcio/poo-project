@@ -2,8 +2,7 @@ package application.views.login;
 
 import application.controller.UsuarioController;
 import application.views.Tela;
-import application.views.principal.TelaPrincipalMedico;
-import application.views.principal.TelaPrincipalSecretaria;
+import application.views.principal.TelaPrincipal;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -82,16 +81,10 @@ public class TelaLogin implements Tela {
 			try {
 				long perfil = controller.authenticate(login.getText(), password.getText());
 				
-				if (perfil == 1) {
-					new TelaPrincipalMedico().mountScene(stage);
-				}
-
-				if (perfil == 2) {
-					new TelaPrincipalSecretaria().mountScene(stage);
-				}
-
 				if(perfil == 0) {
 					errorMessage("Login ou senha inválidos!");
+				}else {
+					new TelaPrincipal().mountScene(stage);
 				}
 
 			} catch (Exception e) {

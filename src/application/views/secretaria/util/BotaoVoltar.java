@@ -1,4 +1,4 @@
-package application.views.util;
+package application.views.secretaria.util;
 
 import application.views.Tela;
 import javafx.scene.image.Image;

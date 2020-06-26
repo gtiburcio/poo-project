@@ -15,44 +15,46 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Medico implements IModel {
 
-	private long id;
+    private long id;
 
-	private String nome;
+    private String nome;
 
-	private String cpf;
+    private String cpf;
 
-	private String rg;
+    private String rg;
 
-	private LocalDate dataNasc;
+    private LocalDate dataNasc;
 
-	private String crm;
+    private String crm;
 
-	private String email;
+    private String email;
 
-	private String logradouro;
+    private String logradouro;
 
-	private String cep;
+    private String cep;
 
-	private String complemento;
+    private String complemento;
 
-	private String numero;
+    private String numero;
 
-	private String bairro;
+    private String bairro;
 
-	private String cidade;
+    private String cidade;
 
-	private Estados uf;
+    private Estados uf;
 
-	private String telResid;
+    private String telResid;
 
-	private String telCelular;
+    private String telCelular;
 
-	private Genero genero;
+    private Genero genero;
 
-	private Especialidade especialidade;
-	
-	@Override
-	public String toString() {
-		return nome;
-	}
+    private Especialidade especialidade;
+
+    private Usuario usuario;
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

@@ -3,6 +3,7 @@ package application.dao;
 import application.model.Especialidade;
 import application.model.IModel;
 import application.model.Medico;
+import application.model.Usuario;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 
@@ -23,7 +24,7 @@ public class MedicoDAO implements IDAO {
 	@Override
 	public void save(IModel obj) throws Exception {
 		Medico medico = (Medico) obj;
-		String sql = "insert into medico(nome, cpf, rg, dataNasc, crm, email, logradouro, cep, complemento, numero, bairro, cidade, uf, telResid, telCelular, genero, id_especialidade) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into medico(nome, cpf, rg, dataNasc, crm, email, logradouro, cep, complemento, numero, bairro, cidade, uf, telResid, telCelular, genero, id_especialidade, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstm = connection.prepareStatement(sql);
 		pstm.setString(1, medico.getNome());
 		pstm.setString(2, medico.getCpf());
@@ -42,6 +43,7 @@ public class MedicoDAO implements IDAO {
 		pstm.setString(15, medico.getTelCelular());
 		pstm.setString(16, medico.getGenero().name());
 		pstm.setLong(17, medico.getEspecialidade().getId());
+		pstm.setLong(18, medico.getUsuario().getId());
 		pstm.execute();
 	}
 
@@ -93,7 +95,7 @@ public class MedicoDAO implements IDAO {
 					rs.getString("numero"), rs.getString("bairro"), rs.getString("cidade"),
 					Estados.valueOf(rs.getString("uf")), rs.getString("telResid"), rs.getString("telCelular"),
 					Genero.valueOf(rs.getString("genero")),
-					Especialidade.builder().id(rs.getLong("id_especialidade")).build()));
+					Especialidade.builder().id(rs.getLong("id_especialidade")).build(), Usuario.builder().id(rs.getLong("id_usuario")).build()));
 		}
 		return medicos;
 	}
@@ -111,7 +113,24 @@ public class MedicoDAO implements IDAO {
 					rs.getString("numero"), rs.getString("bairro"), rs.getString("cidade"),
 					Estados.valueOf(rs.getString("uf")), rs.getString("telResid"), rs.getString("telCelular"),
 					Genero.valueOf(rs.getString("genero")),
-					Especialidade.builder().id(rs.getLong("id_especialidade")).build());
+					Especialidade.builder().id(rs.getLong("id_especialidade")).build(), Usuario.builder().id(rs.getLong("id_usuario")).build());
+		}
+		return null;
+	}
+
+	public IModel findByUserId(long userId) throws Exception {
+		String sql = "select * from medico where id_usuario = ?";
+		PreparedStatement pstm = connection.prepareStatement(sql);
+		pstm.setLong(1, userId);
+		ResultSet rs = pstm.executeQuery();
+		if (rs.next()) {
+			return new Medico(rs.getLong("id_medico"), rs.getString("nome"), rs.getString("cpf"),
+					rs.getString("rg"), rs.getDate("dataNasc").toLocalDate(), rs.getString("crm"),
+					rs.getString("email"), rs.getString("logradouro"), rs.getString("cep"), rs.getString("complemento"),
+					rs.getString("numero"), rs.getString("bairro"), rs.getString("cidade"),
+					Estados.valueOf(rs.getString("uf")), rs.getString("telResid"), rs.getString("telCelular"),
+					Genero.valueOf(rs.getString("genero")),
+					Especialidade.builder().id(rs.getLong("id_especialidade")).build(), Usuario.builder().id(rs.getLong("id_usuario")).build());
 		}
 		return null;
 	}
@@ -129,7 +148,7 @@ public class MedicoDAO implements IDAO {
 					rs.getString("numero"), rs.getString("bairro"), rs.getString("cidade"),
 					Estados.valueOf(rs.getString("uf")), rs.getString("telResid"), rs.getString("telCelular"),
 					Genero.valueOf(rs.getString("genero")),
-					Especialidade.builder().id(rs.getLong("id_especialidade")).build()));
+					Especialidade.builder().id(rs.getLong("id_especialidade")).build(), Usuario.builder().id(rs.getLong("id_usuario")).build()));
 		}
 		return medicos;
 	}

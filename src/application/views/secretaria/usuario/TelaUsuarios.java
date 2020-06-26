@@ -1,10 +1,10 @@
-package application.views.usuario;
+package application.views.secretaria.usuario;
 
 import application.controller.UsuarioController;
 import application.model.Usuario;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.principal.TelaPrincipal;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

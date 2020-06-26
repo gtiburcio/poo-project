@@ -1,4 +1,4 @@
-package application.views.medico;
+package application.views.secretaria.medico;
 
 import application.controller.EspecialidadeController;
 import application.controller.MedicoController;
@@ -7,8 +7,8 @@ import application.model.Medico;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.principal.TelaPrincipal;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -22,12 +22,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
+public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 	private Stage stage;
 
 	private final Scene scene;
 
 	private final Pane pane;
+
+	private Medico medico;
 
 	private final MedicoController medicoController = new MedicoController();
 
@@ -93,15 +95,17 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 	Image imgUserAdd = new Image("resources/images/medico.png");
 	ImageView ivUserAdd = new ImageView(imgUserAdd);
 
-	public TelaNovoMedico() {
+	public TelaAtualizarMedico(Medico medico) {
+		this.medico = medico;
 		this.pane = new Pane();
 		this.scene = new Scene(pane, 900, 600);
+		entityToView(medico);
 	}
 
 	public void mountScene(Stage stage) {
 		this.stage = stage;
 
-		stage.setTitle("Novo Médico");
+		stage.setTitle("Atualizar Médico");
 
 		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
 
@@ -235,6 +239,26 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 		stage.setScene(scene);
 	}
 
+	public void entityToView(Medico medico) {
+		tfNome.setText(medico.getNome());
+		cbEspecial.setValue(medico.getEspecialidade());
+		tfCRM.setText(medico.getCrm());
+		tfCPF.setText(medico.getCpf());
+		tfRG.setText(medico.getRg());
+		dpDataNasc.setValue(medico.getDataNasc());
+		tfEmail.setText(medico.getEmail());
+		tfTelResid.setText(medico.getTelResid());
+		tfTelCel.setText(medico.getTelCelular());
+		cbGenero.setValue(medico.getGenero());
+		tfLogradouro.setText(medico.getLogradouro());
+		tfCEP.setText(medico.getCep());
+		tfComplemento.setText(medico.getComplemento());
+		tfNumero.setText(medico.getNumero());
+		tfBairro.setText(medico.getBairro());
+		tfCidade.setText(medico.getCidade());
+		cbUF.setValue(medico.getUf());
+	}
+
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget().equals(btnSalvar)) {
@@ -244,9 +268,9 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 
 	private void salvar() {
 		if (validFields()) {
-			Medico medico = viewToEntity();
+			viewToEntity();
 			try {
-				medicoController.save(medico);
+				medicoController.update(medico);
 				successMessage("Medico ".concat(medico.getNome()).concat(" foi salvo com sucesso!"));
 				new TelaMedicos().mountScene(stage);
 			} catch (Exception e) {
@@ -256,8 +280,7 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 		}
 	}
 
-	private Medico viewToEntity() {
-		Medico medico = new Medico();
+	private void viewToEntity() {
 		medico.setNome(tfNome.getText());
 		medico.setEspecialidade(cbEspecial.getValue());
 		medico.setCrm(tfCRM.getText());
@@ -275,7 +298,6 @@ public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 		medico.setBairro(tfBairro.getText());
 		medico.setCidade(tfCidade.getText());
 		medico.setUf(cbUF.getValue());
-		return medico;
 	}
 
 	private boolean validFields() {

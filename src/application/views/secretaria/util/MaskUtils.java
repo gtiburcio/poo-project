@@ -1,4 +1,4 @@
-package application.views.util;
+package application.views.secretaria.util;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;

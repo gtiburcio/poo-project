@@ -1,4 +1,4 @@
-package application.views.agendamento;
+package application.views.secretaria.agendamento;
 
 import application.controller.AgendamentoController;
 import application.controller.EspecialidadeController;
@@ -9,8 +9,8 @@ import application.model.Especialidade;
 import application.model.Medico;
 import application.model.Paciente;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.principal.TelaPrincipal;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,8 +29,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static application.views.util.MaskUtils.cpfMask;
-import static application.views.util.MaskUtils.removeAllMasks;
+import static application.views.secretaria.util.MaskUtils.cpfMask;
+import static application.views.secretaria.util.MaskUtils.removeAllMasks;
 import static java.util.Objects.nonNull;
 import static javafx.collections.FXCollections.observableList;
 
@@ -204,7 +204,7 @@ public class TelaNovoAgendamento implements Tela {
                 List<LocalTime> horarios = agendamentoController.montarHorariosAgendamento(dataAgendamento, medico.getId());
                 comboHorarios.setItems(observableList(horarios));
                 disableHorarios(false);
-            } catch (SQLException throwables) {
+            } catch (Exception throwables) {
                 errorMessage("Erro ao buscar os horarios, tente novamente mais tarde...");
             }
         }

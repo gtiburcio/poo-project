@@ -2,7 +2,6 @@ package application.controller;
 
 import application.dao.UsuarioDAO;
 import application.model.Usuario;
-import application.utils.UsuarioUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +9,11 @@ import java.util.stream.Collectors;
 public class UsuarioController {
 
     public void save(Usuario usuario) throws Exception {
-        usuario.setSenha(UsuarioUtils.defaultPassword);
         new UsuarioDAO().save(usuario);
+    }
+
+    public long saveAndGetId(Usuario usuario) throws Exception {
+        return new UsuarioDAO().saveAndGetId(usuario);
     }
 
     public void delete(Usuario usuario) throws Exception {
@@ -44,25 +46,23 @@ public class UsuarioController {
     }
 
     private Usuario findByLogin(String login) throws Exception {
-    	try {
-    		Usuario usuario = (Usuario) new UsuarioDAO().findByLogin(login);
+        try {
+            Usuario usuario = (Usuario) new UsuarioDAO().findByLogin(login);
             usuario.setPerfil(new PerfilController().findById(usuario.getPerfil().getId()));
             return usuario;
-		} catch (Exception e) {
-			return null;
-		}
-        
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public long authenticate(String login, String senha) throws Exception {
+    public Usuario authenticate(String login, String senha) throws Exception {
         Usuario usuario = findByLogin(login);
         if (usuario == null) {
-        	return 0;
+            return null;
         }
         if (!usuario.getSenha().equals(senha)) {
-        	return 0;
+            return null;
         }
-        return usuario.getPerfil().getId();
+        return usuario;
     }
-
 }

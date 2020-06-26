@@ -33,18 +33,18 @@ public class AgendamentoDAO {
         pstm.execute();
     }
 
-    public List<IModel> findAgendamentosDiaMedico(LocalDate date, long idMedico) throws SQLException {
-        String sql = "select * from agendamento where data = ? and id_medico = ?";
+    public List<IModel> findAgendamentosDiaMedico(LocalDate date, long idMedico) throws Exception {
+        String sql = "select * from agendamento where data = ? and id_medico = ? order by hora";
         List<IModel> agendamentos = new ArrayList<>();
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setDate(1, Date.valueOf(date));
         pstm.setLong(2, idMedico);
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
+            Paciente paciente = (Paciente) new PacienteDAO().findById(rs.getLong("id_paciente"));
+            Medico medico = (Medico) new MedicoDAO().findById(rs.getLong("id_medico"));
             agendamentos.add(new Agendamento(rs.getLong("id_agendamento"), rs.getDate("data").toLocalDate(),
-                    rs.getTime("hora").toLocalTime(), rs.getInt("duracao"),
-                    Paciente.builder().id(rs.getLong("id_paciente")).build(),
-                    Medico.builder().id(rs.getLong("id_medico")).build()));
+                    rs.getTime("hora").toLocalTime(), rs.getInt("duracao"), paciente, medico));
         }
         return agendamentos;
     }

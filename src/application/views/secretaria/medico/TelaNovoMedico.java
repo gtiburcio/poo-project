@@ -1,14 +1,18 @@
-package application.views.medico;
+package application.views.secretaria.medico;
 
 import application.controller.EspecialidadeController;
 import application.controller.MedicoController;
+import application.controller.PerfilController;
+import application.controller.UsuarioController;
 import application.model.Especialidade;
 import application.model.Medico;
+import application.model.Perfil;
+import application.model.Usuario;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.principal.TelaPrincipal;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -16,27 +20,36 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
+public class TelaNovoMedico implements Tela, EventHandler<ActionEvent> {
 	private Stage stage;
 
 	private final Scene scene;
 
 	private final Pane pane;
 
-	private Medico medico;
-
 	private final MedicoController medicoController = new MedicoController();
 
 	private final EspecialidadeController especialidadeController = new EspecialidadeController();
 
+	private final UsuarioController usuarioController = new UsuarioController();
+
+	private final PerfilController perfilController = new PerfilController();
+
 	Label lblNome = new Label("Nome");
 	TextField tfNome = new TextField();
+
+	Label lblLogin = new Label("Login");
+	TextField tfLogin = new TextField();
+
+	Label lblSenha = new Label("Senha");
+	PasswordField tfSenha = new PasswordField();
 
 	Label lblEspecial = new Label("Especialidades");
 	ComboBox<Especialidade> cbEspecial = new ComboBox<>();
@@ -95,17 +108,15 @@ public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 	Image imgUserAdd = new Image("resources/images/medico.png");
 	ImageView ivUserAdd = new ImageView(imgUserAdd);
 
-	public TelaAtualizarMedico(Medico medico) {
-		this.medico = medico;
+	public TelaNovoMedico() {
 		this.pane = new Pane();
-		this.scene = new Scene(pane, 900, 600);
-		entityToView(medico);
+		this.scene = new Scene(pane, 1000, 700);
 	}
 
 	public void mountScene(Stage stage) {
 		this.stage = stage;
 
-		stage.setTitle("Atualizar Médico");
+		stage.setTitle("Novo Médico");
 
 		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaPrincipal());
 
@@ -113,6 +124,10 @@ public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 
 		pane.getChildren().add(lblNome);
 		pane.getChildren().add(tfNome);
+		pane.getChildren().add(lblLogin);
+		pane.getChildren().add(tfLogin);
+		pane.getChildren().add(lblSenha);
+		pane.getChildren().add(tfSenha);
 		pane.getChildren().add(lblEspecial);
 		pane.getChildren().add(cbEspecial);
 		pane.getChildren().add(lblCRM);
@@ -168,95 +183,83 @@ public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 		tfCRM.relocate(650, 140);
 		tfCRM.setMinWidth(200);
 
-		lblDadosPrincipais.relocate(30, 190);
+		lblLogin.relocate(250, 200);
+		tfLogin.relocate(300, 200);
+		tfLogin.setMinWidth(200);
+
+		lblSenha.relocate(550, 200);
+		tfSenha.relocate(650, 200);
+		tfSenha.setMinWidth(200);
+
+		lblDadosPrincipais.relocate(30, 240);
 		lblDadosPrincipais.setStyle("-fx-underline: true; -fx-font-weight: bold;");
 
-		lblCPF.relocate(70, 240);
-		tfCPF.relocate(120, 240);
+		lblCPF.relocate(70, 290);
+		tfCPF.relocate(120, 290);
 		tfCPF.setMinWidth(170);
 
-		lblRG.relocate(320, 240);
-		tfRG.relocate(350, 240);
+		lblRG.relocate(320, 290);
+		tfRG.relocate(350, 290);
 		tfRG.setMinWidth(170);
 
-		lblDataNasc.relocate(550, 240);
-		dpDataNasc.relocate(650, 240);
+		lblDataNasc.relocate(550, 290);
+		dpDataNasc.relocate(680, 290);
 		dpDataNasc.setMinWidth(200);
 
-		lblEmail.relocate(70, 290);
-		tfEmail.relocate(150, 290);
+		lblEmail.relocate(70, 340);
+		tfEmail.relocate(150, 340);
 		tfEmail.setMaxWidth(100);
 
-		lblTelResid.relocate(280, 290);
-		tfTelResid.relocate(370, 290);
+		lblTelResid.relocate(280, 340);
+		tfTelResid.relocate(370, 340);
 		tfTelResid.setMaxWidth(100);
 
-		lblTelCel.relocate(475, 290);
-		tfTelCel.relocate(550, 290);
+		lblTelCel.relocate(475, 340);
+		tfTelCel.relocate(550, 340);
 		tfTelCel.setMaxWidth(120);
 
-		lblGenero.relocate(700, 290);
-		cbGenero.relocate(750, 290);
+		lblGenero.relocate(700, 340);
+		cbGenero.relocate(750, 340);
 		cbGenero.setMinWidth(100);
 		cbGenero.getItems().addAll(Genero.values());
 
-		lblEndereco.relocate(30, 340);
+		lblEndereco.relocate(30, 390);
 		lblEndereco.setStyle("-fx-underline: true; -fx-font-weight: bold;");
 
-		lblLogradouro.relocate(70, 390);
-		tfLogradouro.relocate(150, 390);
+		lblLogradouro.relocate(70, 440);
+		tfLogradouro.relocate(150, 440);
 		tfLogradouro.setMinWidth(270);
 
-		lblCEP.relocate(500, 390);
-		tfCEP.relocate(550, 390);
+		lblCEP.relocate(500, 440);
+		tfCEP.relocate(550, 440);
 		tfCEP.setMinWidth(70);
 
-		lblComplemento.relocate(70, 440);
-		tfComplemento.relocate(160, 440);
+		lblComplemento.relocate(70, 500);
+		tfComplemento.relocate(170, 500);
 		tfComplemento.setMinWidth(200);
 
-		lblNumero.relocate(500, 440);
-		tfNumero.relocate(550, 440);
+		lblNumero.relocate(500, 500);
+		tfNumero.relocate(560, 500);
 		tfNumero.setMinWidth(70);
 
-		lblBairro.relocate(70, 490);
-		tfBairro.relocate(160, 490);
+		lblBairro.relocate(70, 550);
+		tfBairro.relocate(160, 550);
 		tfBairro.setMinWidth(200);
 
-		lblCidade.relocate(400, 490);
-		tfCidade.relocate(460, 490);
+		lblCidade.relocate(400, 550);
+		tfCidade.relocate(460, 550);
 		tfCidade.setMinWidth(200);
 
-		lblUF.relocate(700, 490);
-		cbUF.relocate(730, 490);
+		lblUF.relocate(700, 550);
+		cbUF.relocate(730, 550);
 		cbUF.setMinWidth(70);
 		cbUF.getItems().addAll(Estados.values());
 
-		btnSalvar.relocate(770, 560);
+		btnSalvar.relocate(770, 620);
 		btnSalvar.setMinWidth(80);
 		btnSalvar.setOnAction(this);
 
 		stage.setScene(scene);
-	}
-
-	public void entityToView(Medico medico) {
-		tfNome.setText(medico.getNome());
-		cbEspecial.setValue(medico.getEspecialidade());
-		tfCRM.setText(medico.getCrm());
-		tfCPF.setText(medico.getCpf());
-		tfRG.setText(medico.getRg());
-		dpDataNasc.setValue(medico.getDataNasc());
-		tfEmail.setText(medico.getEmail());
-		tfTelResid.setText(medico.getTelResid());
-		tfTelCel.setText(medico.getTelCelular());
-		cbGenero.setValue(medico.getGenero());
-		tfLogradouro.setText(medico.getLogradouro());
-		tfCEP.setText(medico.getCep());
-		tfComplemento.setText(medico.getComplemento());
-		tfNumero.setText(medico.getNumero());
-		tfBairro.setText(medico.getBairro());
-		tfCidade.setText(medico.getCidade());
-		cbUF.setValue(medico.getUf());
 	}
 
 	@Override
@@ -268,9 +271,22 @@ public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 
 	private void salvar() {
 		if (validFields()) {
-			viewToEntity();
 			try {
-				medicoController.update(medico);
+			Perfil perfil = perfilController.findByDescription("Médico");
+
+			Usuario usuario = Usuario.builder()
+					.login(tfLogin.getText())
+					.senha(tfSenha.getText())
+					.nome(tfNome.getText())
+					.perfil(perfil)
+					.build();
+
+				long usuarioId = usuarioController.saveAndGetId(usuario);
+
+				Medico medico = viewToEntity();
+				medico.setUsuario(Usuario.builder().id(usuarioId).build());
+
+				medicoController.save(medico);
 				successMessage("Medico ".concat(medico.getNome()).concat(" foi salvo com sucesso!"));
 				new TelaMedicos().mountScene(stage);
 			} catch (Exception e) {
@@ -280,7 +296,8 @@ public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 		}
 	}
 
-	private void viewToEntity() {
+	private Medico viewToEntity() {
+		Medico medico = new Medico();
 		medico.setNome(tfNome.getText());
 		medico.setEspecialidade(cbEspecial.getValue());
 		medico.setCrm(tfCRM.getText());
@@ -298,10 +315,12 @@ public class TelaAtualizarMedico implements Tela, EventHandler<ActionEvent> {
 		medico.setBairro(tfBairro.getText());
 		medico.setCidade(tfCidade.getText());
 		medico.setUf(cbUF.getValue());
+		return medico;
 	}
 
 	private boolean validFields() {
 		if (tfNome.getText().equals("") || cbEspecial.getValue() == null || tfCRM.getText().equals("")
+				|| tfLogin.getText().equals("") || tfSenha.getText().equals("")
 				|| tfCPF.getText().equals("") || tfRG.getText().equals("")|| dpDataNasc.getValue() == null || tfEmail.getText().equals("") ||  tfTelCel.getText().equals("")
 				|| tfTelResid.getText().equals("") || cbGenero.getValue() == null|| tfLogradouro.getText().equals("") || tfCEP.getText().equals("") || tfNumero.getText().equals("")
 				|| tfBairro.getText().equals("") || tfCidade.getText().equals("") || cbUF.getValue() == null) {

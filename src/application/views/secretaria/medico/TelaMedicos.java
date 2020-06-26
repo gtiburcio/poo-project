@@ -1,10 +1,10 @@
-package application.views.medico;
+package application.views.secretaria.medico;
 
 import application.controller.MedicoController;
 import application.model.Medico;
 import application.views.Tela;
-import application.views.principal.TelaPrincipal;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.principal.TelaPrincipal;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;

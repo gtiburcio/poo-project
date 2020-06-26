@@ -23,12 +23,12 @@ public class AgendamentoController {
         new AgendamentoDAO().salvar(agendamento);
     }
 
-    public List<Agendamento> findAgendamentosDiaMedico(LocalDate data, long idMedico) throws SQLException {
+    public List<Agendamento> findAgendamentosDiaMedico(LocalDate data, long idMedico) throws Exception {
         return new AgendamentoDAO().findAgendamentosDiaMedico(data, idMedico)
                 .stream().map(a -> (Agendamento) a).collect(toList());
     }
 
-    public List<LocalTime> montarHorariosAgendamento(LocalDate data, long idMedico) throws SQLException {
+    public List<LocalTime> montarHorariosAgendamento(LocalDate data, long idMedico) throws Exception {
         List<LocalTime> horarios = new ArrayList<>();
 
         LocalTime hora = LocalTime.of(horaInicial, minutoInicial);

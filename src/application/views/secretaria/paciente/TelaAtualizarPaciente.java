@@ -1,4 +1,4 @@
-package application.views.paciente;
+package application.views.secretaria.paciente;
 
 import application.controller.ConvenioController;
 import application.controller.PacienteController;
@@ -11,7 +11,7 @@ import application.model.Plano;
 import application.model.enums.Estados;
 import application.model.enums.Genero;
 import application.views.Tela;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

@@ -1,11 +1,13 @@
-package application.views.principal;
+package application.views.secretaria.principal;
 
 import application.views.Tela;
-import application.views.agendamento.TelaNovoAgendamento;
-import application.views.especialidade.TelaEspecialidades;
-import application.views.medico.TelaMedicos;
-import application.views.paciente.TelaPacientes;
-import application.views.usuario.TelaUsuarios;
+import application.views.login.TelaLogin;
+import application.views.secretaria.agendamento.TelaNovoAgendamento;
+import application.views.secretaria.especialidade.TelaEspecialidades;
+import application.views.secretaria.medico.TelaMedicos;
+import application.views.secretaria.paciente.TelaPacientes;
+import application.views.secretaria.usuario.TelaUsuarios;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -126,6 +128,8 @@ public class TelaPrincipal implements Tela {
         footer.setMinHeight(footerHeight);
         footer.setStyle("-fx-background-color: #4fddae;");
 
+        BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaLogin());
+
         pane.getChildren().add(titulo);
         pane.getChildren().add(labelPaciente);
         pane.getChildren().add(labelMedico);
@@ -134,6 +138,7 @@ public class TelaPrincipal implements Tela {
         pane.getChildren().add(labelPagamento);
         pane.getChildren().add(labelUsuario);
         pane.getChildren().add(footer);
+        pane.getChildren().add(botaoVoltar.getButton());
 
         stage.setScene(scene);
         stage.setTitle("Principal");

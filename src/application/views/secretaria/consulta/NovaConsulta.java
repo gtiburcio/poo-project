@@ -1,4 +1,4 @@
-package application.views.consulta;
+package application.views.secretaria.consulta;
 
 import application.views.Tela;
 import javafx.event.ActionEvent;

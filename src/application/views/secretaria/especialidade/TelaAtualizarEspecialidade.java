@@ -1,9 +1,9 @@
-package application.views.especialidade;
+package application.views.secretaria.especialidade;
 
 import application.controller.EspecialidadeController;
 import application.model.Especialidade;
 import application.views.Tela;
-import application.views.util.BotaoVoltar;
+import application.views.secretaria.util.BotaoVoltar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -15,38 +15,42 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
-	
+public class TelaAtualizarEspecialidade implements Tela, EventHandler<ActionEvent> {
+
 	private Stage stage;
-	
+
 	private final Scene scene;
 
-    private final Pane pane;
-    
-    EspecialidadeController especialidadeController = new EspecialidadeController();
-    
-    Label lblNome = new Label("Nome");
-    TextField tfNome = new TextField();
-    
-    Label lblDescricao = new Label("Descrição");
-    TextField tfDescricao = new TextField();
+	private final Pane pane;
 
-    Button btnSalvar = new Button("Salvar");
+	private Especialidade especialidade;
 
-    Image imgUserAdd = new Image("resources/images/especialidade.png");
-    ImageView ivUserAdd = new ImageView(imgUserAdd);
+	EspecialidadeController especialidadeController = new EspecialidadeController();
+	
+	Label lblNome = new Label("Nome");
+	TextField tfNome = new TextField();
 
-    public TelaNovaEspecialidade() {
-        this.pane = new Pane();
-        this.scene = new Scene(pane, 900, 600);
-    }
+	Label lblDescricao = new Label("Descrição");
+	TextField tfDescricao = new TextField();
 
-    public void mountScene(Stage stage) {
-    	this.stage = stage;
-    	BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaEspecialidades());
-    	
-        stage.setTitle("Nova Especialidade");
-        
+	Button btnSalvar = new Button("Salvar");
+
+	Image imgUserAdd = new Image("resources/images/especialidade.png");
+	ImageView ivUserAdd = new ImageView(imgUserAdd);
+
+	public TelaAtualizarEspecialidade(Especialidade especialidade) {
+		this.especialidade = especialidade;
+		entityToView(especialidade);
+		this.pane = new Pane();
+		this.scene = new Scene(pane, 900, 600);
+	}
+
+	public void mountScene(Stage stage) {
+		this.stage = stage;
+		BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaEspecialidades());
+
+		stage.setTitle("Atualizar Especialidade");
+
         pane.getChildren().add(ivUserAdd);
         pane.getChildren().add(lblNome);
         pane.getChildren().add(tfNome);
@@ -55,7 +59,7 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
         pane.getChildren().add(btnSalvar);
         pane.getChildren().add(botaoVoltar.getButton());
 
-        ivUserAdd.relocate(80, 50);
+		ivUserAdd.relocate(80, 50);
         ivUserAdd.setFitHeight(100);
         ivUserAdd.setFitWidth(100);
         ivUserAdd.setPreserveRatio(true);
@@ -70,42 +74,52 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
         tfDescricao.setMinHeight(100);
  
         btnSalvar.relocate(770, 560);
+        btnSalvar.setMinWidth(80);
+        btnSalvar.setOnAction(this);
+
+        stage.setScene(scene);
+
+		btnSalvar.relocate(770, 560);
 		btnSalvar.setMinWidth(80);
 		btnSalvar.setStyle("-fx-background-color: ".concat("#4fddae"));
 		btnSalvar.setOnAction(this);
 
-        stage.setScene(scene);
-        stage.setTitle("Nova Especialidade");
-    }
+		stage.setScene(scene);
+		stage.setTitle("Nova Especialidade");
+	}
+
+	public void entityToView(Especialidade especialidade) {
+		tfNome.setText(especialidade.getNome());
+		tfDescricao.setText(especialidade.getDescricao());
+		
+	}
+
+	public void viewToEntity() {
+		especialidade.setNome(tfNome.getText());
+		especialidade.setDescricao(tfDescricao.getText());
+	}
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getTarget().equals(btnSalvar)) {
+		if (event.getTarget().equals(btnSalvar)) {
 			salvar();
 		}
-	}
-	
-	public Especialidade viewToEntityEspecialidade() {
-		Especialidade especialidade = new Especialidade();
-		especialidade.setNome(tfNome.getText());
-		especialidade.setDescricao(tfDescricao.getText());
-		return especialidade;
+
 	}
 
 	private void salvar() {
 		if (validFields()) {
-			Especialidade especialidade = viewToEntityEspecialidade();
+			viewToEntity();
 			try {
-				especialidadeController.save(especialidade);
-				successMessage("Especialidade ".concat(especialidade.getNome()).concat(" foi salvo com sucesso!"));
+				especialidadeController.update(especialidade);
+				successMessage("Especialidade ".concat(especialidade.getNome()).concat(" foi atualizado com sucesso!"));
 				new TelaEspecialidades().mountScene(stage);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				e.printStackTrace();
 				errorMessage("Ocorreu um erro ao salvar a especialidade, tente novamente mais tarde...");
 			}
-
 		}
+			
 	}
 
 	private boolean validFields() {
@@ -113,7 +127,8 @@ public class TelaNovaEspecialidade implements Tela, EventHandler<ActionEvent> {
 			errorMessage("Preencha o nome, por favor!");
 			return false;
 		}
+		
 		return true;
 	}
-	
+
 }

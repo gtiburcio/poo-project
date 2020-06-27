@@ -5,7 +5,7 @@ import application.controller.UsuarioController;
 import application.model.Medico;
 import application.model.Usuario;
 import application.views.Tela;
-import application.views.medico.TelaPrincipalMedico;
+import application.views.medico.principal.TelaPrincipalMedico;
 import application.views.secretaria.principal.TelaPrincipal;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

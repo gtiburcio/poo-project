@@ -1,10 +1,11 @@
-package application.views.medico;
+package application.views.medico.principal;
 
 import application.controller.AgendamentoController;
 import application.model.Agendamento;
 import application.model.Medico;
 import application.views.Tela;
 import application.views.login.TelaLogin;
+import application.views.medico.consulta.TelaConsulta;
 import application.views.secretaria.util.BotaoVoltar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -23,8 +24,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class TelaPrincipalMedico implements Tela {
+
+    private Stage stage;
 
     private final Pane pane;
 
@@ -49,6 +53,7 @@ public class TelaPrincipalMedico implements Tela {
 
     @Override
     public void mountScene(Stage stage) {
+        this.stage = stage;
         Label titulo = new Label("Bem vindo ".concat(medico.getNome()));
         titulo.setFont(new Font("Arial", 40));
         titulo.relocate(400, 50);
@@ -60,6 +65,7 @@ public class TelaPrincipalMedico implements Tela {
         dpAgendamento = new DatePicker();
         dpAgendamento.relocate(760, 120);
         dpAgendamento.setMinWidth(200);
+        dpAgendamento.setValue(LocalDate.now());
 
         Button buttonLogin = new Button("Filtrar");
         buttonLogin.relocate(1000, 120);
@@ -97,6 +103,14 @@ public class TelaPrincipalMedico implements Tela {
 
         loadAgendamentos(LocalDate.now());
 
+        Button buttonRealizarConsulta = new Button("Realizar Consulta!");
+        buttonRealizarConsulta.relocate(550, 640);
+        buttonRealizarConsulta.setStyle("-fx-background-color: ".concat("#5F57E5"));
+        buttonRealizarConsulta.setMinWidth(100);
+        buttonRealizarConsulta.setMinHeight(30);
+        buttonRealizarConsulta.setOnMouseClicked(event -> realizarConsulta());
+
+
         BotaoVoltar botaoVoltar = new BotaoVoltar(stage, new TelaLogin());
 
         pane.getChildren().add(titulo);
@@ -104,10 +118,20 @@ public class TelaPrincipalMedico implements Tela {
         pane.getChildren().add(labelDataAgendamento);
         pane.getChildren().add(dpAgendamento);
         pane.getChildren().add(buttonLogin);
+        pane.getChildren().add(buttonRealizarConsulta);
         pane.getChildren().add(botaoVoltar.getButton());
 
         stage.setScene(scene);
         stage.setTitle("Agendamento do Dia");
+    }
+
+    private void realizarConsulta() {
+        Agendamento agendamentoSelecionado = getSelectedAgendamento();
+        if (Objects.nonNull(agendamentoSelecionado)) {
+            new TelaConsulta(agendamentoSelecionado).mountScene(stage);
+        } else {
+            errorMessage("Selecione um agendamento para realizar a consulta!");
+        }
     }
 
     private void loadAgendamentos(LocalDate date) {
@@ -117,5 +141,10 @@ public class TelaPrincipalMedico implements Tela {
         } catch (Exception throwables) {
             errorMessage("Ocorreu um erro ao carregar os agendamentos, tente mais tarde...");
         }
+    }
+
+    private Agendamento getSelectedAgendamento() {
+        TableView.TableViewSelectionModel<Agendamento> selectionModel = table.getSelectionModel();
+        return selectionModel.getSelectedItem();
     }
 }

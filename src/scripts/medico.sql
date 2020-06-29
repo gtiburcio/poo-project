@@ -1,0 +1,21 @@
+create table medico(
+    id_medico bigint primary key auto_increment,
+    nome varchar(255) not null,
+    cpf varchar(11) not null unique,
+    rg varchar(9) not null,
+    dataNasc date,
+    crm varchar(50) not null,
+    email varchar(150) not null,
+    logradouro varchar(255) not null,
+    cep varchar(8) not null,
+    complemento varchar(150),
+    numero varchar(6) not null,
+    bairro varchar(200) not null,
+    cidade varchar(255) not null,
+    uf varchar(2) not null,
+    telResid varchar(20),
+    telCelular varchar(20) not null,
+    genero varchar(30) not null,
+    id_especialidade bigint,
+    foreign key (id_especialidade) references especialidade(id_especialidade)
+);

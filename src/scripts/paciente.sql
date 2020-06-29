@@ -1,0 +1,23 @@
+CREATE TABLE `paciente` (
+  `id_paciente` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `dataNasc` date NOT NULL,
+  `genero` varchar(1) NOT NULL,
+  `cpf` varchar(15) NOT NULL,
+  `rg` varchar(13) NOT NULL,
+  `nCarteirinha` varchar(20) DEFAULT NULL,
+  `id_plano` bigint(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `telResid` varchar(20) DEFAULT NULL,
+  `telCelular` varchar(20) DEFAULT NULL,
+  `logradouro` varchar(100) NOT NULL,
+  `cep` varchar(15) NOT NULL,
+  `complemento` varchar(20) DEFAULT NULL,
+  `numero` varchar(10) NOT NULL,
+  `bairro` varchar(100) NOT NULL,
+  `cidade` varchar(100) NOT NULL,
+  `uf` varchar(2) NOT NULL,
+  PRIMARY KEY (`id_paciente`),
+  KEY `paciente_ibfk_1_idx` (`id_plano`),
+  CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`id_plano`) REFERENCES `plano` (`id_plano`)
+)
